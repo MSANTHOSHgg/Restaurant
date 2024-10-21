@@ -5,13 +5,15 @@ import {Link} from 'react-router-dom';
 import { StoreContext } from '../../Context/StoreContext';
 const Nav = ({setlogin,isLogged}) => {
     const [menu,setmenu]=useState("Home");
+    const [menu1,setmenu1]=useState("Home");
     const {getTotalAmount}=useContext(StoreContext);
   return (
     <div className='navbar'>
        <Link to='/'><img src={assets.logo} className='logo' /></Link>
         <ul className='navbar-menu'>
             <Link to='/' onClick={()=>setmenu("Home")} className={menu==="Home"?"active":""}>Home</Link>
-            <a href='#explor-menu' onClick={()=>setmenu("Menu")} className={menu==="Menu"?"active":""}>Menu</a>
+            <Link to='/Menu' onClick={()=>setmenu1("Menu")} className={menu1==="Menu"?"active":""}>Menu</Link>
+            {/* <a href='#explor-menu' onClick={()=>setmenu("Menu")} className={menu==="Menu"?"active":""}>Menu</a> */}
             <a href='#footer' onClick={()=>setmenu("Contact")} className={menu==="Contact"?"active":""}>Contact us</a>
         </ul>
         <div className='navbar-right'>

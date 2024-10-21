@@ -7,6 +7,7 @@ import Footer from './Component/Footer/Footer'
 import Login from './Component/Login/Login'
 import CartItems from './pages/CartItems/CartItems'
 import CustomerDetails from './pages/CustomerDetails/CustomerDetails'
+import ExplorMenu from './pages/ExplorMenu/ExplorMenu'
 
 const App = () => {
   const [login,setlogin]=useState(false)
@@ -20,8 +21,10 @@ const App = () => {
         <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/Cart' element={<CartItems/>}/>
+        <Route path='/Menu' element={<ExplorMenu />}/>
         <Route path='/Profile' element={<CustomerDetails/>}/>
         </Routes>
+        
     </div>
     <Footer/>
    </>
