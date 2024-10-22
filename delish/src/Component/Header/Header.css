@@ -1,10 +1,11 @@
 .header{
-    height: 34vw;
+    height: 41vw;
     margin: 10px auto;
     background: url('./header_img.png');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size:cover ;
     position: relative;
+    border-radius: 15px;
 }
 .header-content{
     position: absolute;
@@ -26,7 +27,7 @@
     color: white;
     font-size: 1vw;
 }
-.header-content button{
+.header-content span{
     border: none;
     color: #747474;
     font-weight: 500;
@@ -34,6 +35,10 @@
     background-color: white;
     font-size: max(1vw,13px);
     border-radius: 50px;
+}
+.header-content span:hover{
+    cursor: pointer;
+    transform: scale(1.05);
 }
 
 @media(max-width:1050px){

@@ -1,0 +1,12 @@
+.bgvideo video{
+    width: 80%;
+    height: auto;
+    position: fixed;
+    top: 90px;
+    border-radius: 15px;
+
+}
+.bgvideo{
+    height: 90vh;
+    position: relative;
+}

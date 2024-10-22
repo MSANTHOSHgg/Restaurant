@@ -14,7 +14,7 @@ const Header = ({menu, setmenu}) => {
         <div className='header-content'>
             <h2>Order your favourite food here..</h2>
             <p>Choose from a diverse menu featuring a delectable array of dishes crafted with the finest ingredient.</p>
-            <button onClick={()=>setmenu("Menu")}><span><Link to='/Menu'>View Menu</Link></span></button>
+            <span><Link onClick={()=>setmenu("Menu")} to='/Menu'>View Menu</Link></span>
         </div>
     </div>
   )

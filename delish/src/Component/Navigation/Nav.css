@@ -4,7 +4,11 @@
     justify-content: space-between;
     align-items: center;
     height: 100px;
-    
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: rgb(250, 236, 220);
+    box-shadow: 0px 1px rgba(0,0,0,0.1);
 }
 .navbar .logo{
     width: 160px;
