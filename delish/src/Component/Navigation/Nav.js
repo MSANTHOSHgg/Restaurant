@@ -1,32 +1,45 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import './Nav.css'
 import { assets } from '../../assets/assets'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { StoreContext } from '../../Context/StoreContext';
-const Nav = ({setlogin,isLogged}) => {
-    const [menu,setmenu]=useState("Home");
-    const [menu1,setmenu1]=useState("Home");
-    const {getTotalAmount}=useContext(StoreContext);
+import Header from '../Header/Header';
+const Nav = ({ setlogin, isLogged ,menu,setmenu}) => {
+
+
+  useEffect(() => {
+    const web = window.location.href;
+    setmenu(web)
+  }, [menu])
+
+  const { getTotalAmount } = useContext(StoreContext);
+
+  const getData=(data)=>{
+    setmenu({data});
+    console.log("Nav",data)
+  }
+
   return (
     <div className='navbar'>
-       <Link to='/'><img src={assets.logo} className='logo' /></Link>
-        <ul className='navbar-menu'>
-            <Link to='/' onClick={()=>setmenu("Home")} className={menu==="Home"?"active":""}>Home</Link>
-            <Link to='/Menu' onClick={()=>setmenu1("Menu")} className={menu1==="Menu"?"active":""}>Menu</Link>
-            {/* <a href='#explor-menu' onClick={()=>setmenu("Menu")} className={menu==="Menu"?"active":""}>Menu</a> */}
-            <a href='#footer' onClick={()=>setmenu("Contact")} className={menu==="Contact"?"active":""}>Contact us</a>
-        </ul>
-        <div className='navbar-right'>
-            <div className='navbar-search-icon'>
-            <Link to='/cart'><img src={assets.basket_icon} /></Link>
-                <div className={getTotalAmount()===0?"":"dot"}></div>
-            </div>
-            {isLogged?(
-              <Link to='/Profile'> <img className='profile' src={assets.profile_icon} /> </Link>)
-              :<button onClick={()=>setlogin(true)}>Sign in</button>}
-            
+      <Link to='/'><img src={assets.logo} className='logo' /></Link>
+      <ul className='navbar-menu'>
+        <span><Link to='/' onClick={() => setmenu("Home")} className={menu === "http://localhost:3000/" ? "active" : ""}>Home</Link></span>
+        <span><Link to='/Menu' onClick={() => setmenu("Menu")} className={menu === "http://localhost:3000/Menu" ? "active" : ""}>Menu</Link></span>
+        <span><Link to='/footer' onClick={() => setmenu("footer")} className={menu === "http://localhost:3000/footer" ? "active" : ""}>Contact us</Link></span>
+      </ul>
+      <div className='navbar-right'>
+        <div className='navbar-search-icon'>
+          <Link to='/cart'><img className="basket" src={assets.basket_icon} /></Link>
+          <div className={getTotalAmount() === 0 ? "" : "dot"}></div>
         </div>
+        {isLogged ? (
+          <Link to='/Profile'> <img className='profile' src={assets.profile_icon} /> </Link>)
+          : <button onClick={() => setlogin(true)}>Sign in</button>}
+
+      </div>
+      <div className='headerInNav'><Header onSubmit1={getData}/></div>
     </div>
+
   )
 }
 

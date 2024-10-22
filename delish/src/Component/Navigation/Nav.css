@@ -4,6 +4,7 @@
     justify-content: space-between;
     align-items: center;
     height: 100px;
+    
 }
 .navbar .logo{
     width: 160px;
@@ -16,6 +17,10 @@
     color: #49557e;
     font-size: 18px;
     cursor: pointer;
+}
+.navbar-menu span:hover{
+    color: tomato; 
+    transform: scale(1.1);    
 }
 .navbar-right{
     display: flex;
@@ -36,11 +41,17 @@
     background-color: #fff4f2;
 }
 .navbar .active{
-    padding-bottom: 2px;
-    border-bottom: 2px solid #49557e;
+    padding: 2px;
+    border-radius: 5px;
+    border-bottom: 3px solid tomato;
 }
 .navbar-search-icon{
     position: relative;
+    border-radius: 10px;
+}
+.basket:hover{
+    
+    transform: scale(1.2);
 }
 .navbar-search-icon .dot{
     position: absolute;
@@ -105,4 +116,8 @@
         display: none;
     }
     
+}
+
+.headerInNav{
+    display: none;
 }
