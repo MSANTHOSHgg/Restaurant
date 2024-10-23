@@ -4,9 +4,7 @@ import {Link} from 'react-router-dom';
 
 import './Header.css'
 const Header = ({menu, setmenu}) => {
-  const refresh=()=>{
-      window.location.reload(false);
-  }
+  
   
   return (
     
