@@ -1,21 +1,59 @@
 .cart{
-    margin-top: 100px;
+    margin-top: 50px;
+    min-height: 40vh;
+    
+}
+.cart-items{
+    width: 60vw;
 }
 .cart-items-title{
-    display: grid;
+    display: grid;   
     grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.3fr;
     align-items: center;
     color: grey;
-    font-size: 12px;
+    width: 55vw;
+    font-size: 15px;
 }
 .cart-items-item{
+    width: 55vw;
     margin: 10px 0;
-    color: black;
+    color: grey;
+    font-size: 15px;
+    display: grid;   
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.4fr;
+    align-items: center;
 }
+/* .cart-items-item span{
+    margin-left: -17px;
+} */
+.cart-list-scroll{
+    height: 30vh;
+    width: 100%;
+    overflow-y: scroll;
+    /* scrollbar-width:thin; */
+}
+.cart-list-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+.cart-list-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+.cart-list-scroll::-webkit-scrollbar-thumb {
+    background: tomato;
+  }
+  
+.cart-list-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgb(252, 150, 132);
+  } 
+
 .cart-items-item img{
     width: 50px;
+    border-radius: 5px;
 }
 .cart hr{
+    
     height: 1px;
     background-color: #e2e2e2;
     border: none;
@@ -24,13 +62,16 @@
     cursor: pointer;
 }
 .cart-bottom{
-    width: 50%;
+    width: 25%;
     margin-top: 70px;
     display: flex;
     justify-content: space-between;
-    gap:10px
+    gap:10px;
 }
 .cart-total{
+    position:absolute;
+    top: 140px;
+    right: 180px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -53,6 +94,65 @@
     margin-top: 10px;
     padding: 12px 0;
     border-radius: 5px;
+}
+.Final-total{
+    font-weight: 800;
+}
+
+
+
+
+.quan{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80px;
+}
+.quan p{
+    
+    font-weight: 500;
+    width: 9px;
+    display: flex;
+    justify-content: center;
+}
+.quan button{
+    width: 25px;
+    background-color: white;
+    border-radius: 35%;
+    font-size: 18px;
+    font-weight: 600;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    border: none;
+    justify-content: center;
+}
+
+.quan .green{
+    border: 1px solid rgb(161, 249, 161);
+    background-color: greenyellow;
+    color: green;
+    transition: background-color 1s ease;
+}
+.quan .red{
+    background-color: rgb(249, 167, 167);
+    transition: background-color 1s ease;
+    color: red;
+}
+
+.quan .green:active{
+    background-color: rgb(84, 232, 84);
+}
+.quan .red:active{
+    background-color: rgb(255, 120, 120);
+}
+
+.cart-NoItems{
+    font-size: larger;
+    position: absolute;
+    top: 18vh;
+    left: 35vw;
+
 }
 
 @media(max-width:750px){

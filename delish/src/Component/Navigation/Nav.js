@@ -29,7 +29,7 @@ const Nav = ({ setlogin, isLogged ,menu,setmenu}) => {
       </ul>
       <div className='navbar-right'>
         <div className='navbar-search-icon'>
-          <Link to='/cart'><img className="basket" src={assets.basket_icon} /></Link>
+          <Link to='/cart' onClick={() => setmenu("cart")} className={menu === "http://localhost:3000/cart" ? "active" : ""}><img className="basket" src={assets.basket_icon} /></Link>
           <div className={getTotalAmount() === 0 ? "" : "dot"}></div>
         </div>
         {isLogged ? (

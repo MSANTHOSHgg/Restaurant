@@ -2,7 +2,7 @@
     width: 100%;
     margin: auto;
     border-radius: 15px;
-    box-shadow: 0px 0px 10px #00000015;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
     transition: 0.3s;
     animation: fadeIn 1s;
     background-color: rgb(254, 247, 240);
@@ -23,6 +23,7 @@
 .food-item-name-rating p{
     font-size: 18px;
     font-weight: 500;
+    
 }
 .food-item-name-rating img{
     width: 70px;
@@ -58,12 +59,44 @@ border-radius: 50%;
     padding: 6px;
     border-radius: 50px;
     background-color: white;
+    width: 100px;
 }
-.food-item-counter img{
+.food-item-counter p{
+    color: tomato;
+    font-weight: 700;
+    width: 9px;
+    display: flex;
+    justify-content: center;
+}
+.food-item-counter button{
     width: 30px;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 600;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.food-item-counter:focus{
-    border:2px solid darkorange;
+
+.food-item-counter .green{
+    border: 1px solid rgb(161, 249, 161);
+    background-color: greenyellow;
+    color: green;
+    transition: background-color 1s ease;
+}
+.food-item-counter .red{
+    border: 1px solid rgb(252, 138, 138);
+    background-color: rgb(249, 167, 167);
+    transition: background-color 1s ease;
+    color: red;
+}
+
+.food-item-counter .green:active{
+    background-color: rgb(84, 232, 84);
+}
+.food-item-counter .red:active{
+    background-color: rgb(255, 120, 120);
 }
 
 .food-item-img{
