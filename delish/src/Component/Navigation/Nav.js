@@ -25,7 +25,7 @@ const Nav = ({ setlogin, isLogged ,menu,setmenu}) => {
       <ul className='navbar-menu'>
         <span><Link to='/' onClick={() => setmenu("Home")} className={menu === "http://localhost:3000/" ? "active" : ""}>Home</Link></span>
         <span><Link to='/Menu' onClick={() => setmenu("Menu")} className={menu === "http://localhost:3000/Menu" ? "active" : ""}>Menu</Link></span>
-        <span><Link to='/footer' onClick={() => setmenu("footer")} className={menu === "http://localhost:3000/footer" ? "active" : ""}>Contact us</Link></span>
+        <span><Link to='/AboutUs' onClick={() => setmenu("AboutUs")} className={menu === "http://localhost:3000/AboutUs" ? "active" : ""}>About us</Link></span>
       </ul>
       <div className='navbar-right'>
         <div className='navbar-search-icon'>

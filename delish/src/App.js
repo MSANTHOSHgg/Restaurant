@@ -3,11 +3,12 @@ import React, { useState } from 'react'
 import Nav from './Component/Navigation/Nav'
 import Home from './pages/Home/Home'
 import { Route,Routes } from 'react-router-dom'
-import Footer from './pages/Footer/Footer'
 import Login from './Component/Login/Login'
 import CartItems from './pages/CartItems/CartItems'
 import CustomerDetails from './pages/CustomerDetails/CustomerDetails'
 import ExplorMenu from './pages/ExplorMenu/ExplorMenu'
+import { Footer } from './Component/Footer/Footer'
+import AboutUs from './pages/AboutUs/AboutUs'
 
 const App = () => {
   const [login,setlogin]=useState(false)
@@ -23,12 +24,12 @@ const App = () => {
         <Route path='/' element={<Home menu={menu} setmenu={setmenu}/>}/>
         <Route path='/Cart' element={<CartItems/>}/>
         <Route path='/Menu' element={<ExplorMenu />}/>
-        <Route path='/Menu' element={<Footer/>}/>
+        <Route path='/AboutUs' element={<AboutUs/>}/>
         <Route path='/Profile' element={<CustomerDetails/>}/>
         </Routes>
         
     </div>
-    <Footer/>
+    <Footer menu={menu} setmenu={setmenu}/>
    </>
   )
 }

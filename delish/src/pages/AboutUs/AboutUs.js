@@ -1,7 +1,7 @@
 import React from 'react'
-import './Footer.css'
+// import './AboutUs.css'   
 import { assets } from '../../assets/assets'
-const Footer = () => {
+const AboutUs = () => {
   return (
     
     <div className='footer' id='footer'>
@@ -37,4 +37,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default AboutUs
