@@ -15,9 +15,9 @@ export const Footer = ({ menu, setmenu }) => {
             </div>
             <div className='footer-container'>
                 <ul className='footer-menu'>
-                    <span><Link to='/' onClick={() => setmenu("Home")} className={menu === "http://localhost:3000/" ? "active" : ""}>Home</Link></span>
-                    <span><Link to='/Menu' onClick={() => setmenu("Menu")} className={menu === "http://localhost:3000/Menu" ? "active" : ""}>Menu</Link></span>
-                    <span><Link to='/AboutUs' onClick={() => setmenu("AboutUs")} className={menu === "http://localhost:3000/AboutUs" ? "active" : ""}>About us</Link></span>
+                    <span><Link to='/TermsAndCondition' onClick={() => setmenu("Terms")} className={menu === "http://localhost:3000/TermsAndCondition" ? "active" : ""}>Terms and Condition</Link></span>
+                    <span><Link to='/PrivacyPolicy' onClick={() => setmenu("Privacy")} className={menu === "http://localhost:3000/PrivacyPolicy" ? "active" : ""}>Privacy policy</Link></span>                    
+                    <span><Link to='/ContactUs' onClick={() => setmenu("ContactUs")} className={menu === "http://localhost:3000/ContactUs" ? "active" : ""}>Contact Us</Link></span>
                 </ul>
             </div>
 

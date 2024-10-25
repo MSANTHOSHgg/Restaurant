@@ -9,6 +9,8 @@ import CustomerDetails from './pages/CustomerDetails/CustomerDetails'
 import ExplorMenu from './pages/ExplorMenu/ExplorMenu'
 import { Footer } from './Component/Footer/Footer'
 import AboutUs from './pages/AboutUs/AboutUs'
+import {Policy} from './Component/Policy/Policy'
+import PrivacyPolicy from './Component/PrivacyPolicy/PrivacyPolicy'
 
 const App = () => {
   const [login,setlogin]=useState(false)
@@ -17,7 +19,7 @@ const App = () => {
 
   return (
    <>
-   {login?<Login setlogin={setlogin} setisLogged={setisLogged}/>:<></>}
+   {login?<Login setlogin={setlogin} setisLogged={setisLogged} setmenu={setmenu} menu={menu}/>:<></>}
     <div className='app'>
       <Nav setlogin={setlogin}  isLogged={isLogged}  menu={menu} setmenu={setmenu}/>
         <Routes>
@@ -26,6 +28,8 @@ const App = () => {
         <Route path='/Menu' element={<ExplorMenu />}/>
         <Route path='/AboutUs' element={<AboutUs/>}/>
         <Route path='/Profile' element={<CustomerDetails/>}/>
+        <Route path='/TermsAndCondition'  element={<Policy menu={menu} setmenu={setmenu}/>}/>
+        <Route path='/PrivacyPolicy' element={<PrivacyPolicy/>}/>
         </Routes>
         
     </div>

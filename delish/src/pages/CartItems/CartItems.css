@@ -1,7 +1,7 @@
 .cart{
     margin-top: 50px;
-    min-height: 40vh;
-    
+    /* padding-bottom: 10%; */
+    min-height: 55.5vh;
 }
 .cart-items{
     width: 60vw;
@@ -23,14 +23,11 @@
     grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.4fr;
     align-items: center;
 }
-/* .cart-items-item span{
-    margin-left: -17px;
-} */
+
 .cart-list-scroll{
     height: 30vh;
     width: 100%;
     overflow-y: scroll;
-    /* scrollbar-width:thin; */
 }
 .cart-list-scroll::-webkit-scrollbar {
     width: 4px;

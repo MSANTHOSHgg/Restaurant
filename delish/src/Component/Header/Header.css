@@ -6,6 +6,7 @@
     background-size:cover ;
     position: relative;
     border-radius: 15px;
+    margin-bottom: 50px;
 }
 .header-content{
     position: absolute;
