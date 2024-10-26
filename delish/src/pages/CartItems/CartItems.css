@@ -1,7 +1,7 @@
 .cart{
     margin-top: 50px;
-    /* padding-bottom: 10%; */
     min-height: 55.5vh;
+    padding: 0 5vw;
 }
 .cart-items{
     width: 60vw;
@@ -68,7 +68,7 @@
 .cart-total{
     position:absolute;
     top: 140px;
-    right: 180px;
+    right: 150px;
     flex: 1;
     display: flex;
     flex-direction: column;

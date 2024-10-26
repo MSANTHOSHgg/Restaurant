@@ -11,15 +11,17 @@ import { Footer } from './Component/Footer/Footer'
 import AboutUs from './pages/AboutUs/AboutUs'
 import {Policy} from './Component/Policy/Policy'
 import PrivacyPolicy from './Component/PrivacyPolicy/PrivacyPolicy'
+import ContactUs from './Component/ContactUs/ContactUs'
 
 const App = () => {
   const [login,setlogin]=useState(false)
   const [isLogged,setisLogged] =useState(false)
   const [menu, setmenu] = useState()
+  const [existingemail, setexistingemail] = useState("");
 
   return (
    <>
-   {login?<Login setlogin={setlogin} setisLogged={setisLogged} setmenu={setmenu} menu={menu}/>:<></>}
+   {login?<Login setlogin={setlogin} setisLogged={setisLogged} setmenu={setmenu} menu={menu} existingemail={existingemail} setexistingemail={setexistingemail}/>:<></>}
     <div className='app'>
       <Nav setlogin={setlogin}  isLogged={isLogged}  menu={menu} setmenu={setmenu}/>
         <Routes>
@@ -27,9 +29,10 @@ const App = () => {
         <Route path='/Cart' element={<CartItems/>}/>
         <Route path='/Menu' element={<ExplorMenu />}/>
         <Route path='/AboutUs' element={<AboutUs/>}/>
-        <Route path='/Profile' element={<CustomerDetails/>}/>
+        <Route path='/Profile' element={<CustomerDetails existingemail={existingemail}/>}/>
         <Route path='/TermsAndCondition'  element={<Policy menu={menu} setmenu={setmenu}/>}/>
         <Route path='/PrivacyPolicy' element={<PrivacyPolicy/>}/>
+        <Route path='/ContactUs' element={<ContactUs/>}/>
         </Routes>
         
     </div>

@@ -1,5 +1,6 @@
 .navbar{
-    padding: 10px 0;
+    width: 100%;
+    padding: 10px 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -119,8 +120,4 @@
         display: none;
     }
     
-}
-
-.headerInNav{
-    display: none;
 }

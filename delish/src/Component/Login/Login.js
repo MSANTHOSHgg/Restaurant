@@ -5,18 +5,16 @@ import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 
-const Login = ({ setlogin, setisLogged, setmenu,menu }) => {
+const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexistingemail}) => {
     const [currentState, setcurrentState] = useState("Login");
-    const [existingemail, setexistingemail] = useState("");
     const [existingpass, setexistingpass] = useState("");
     const [Serror, setSerror] = useState({});
     const [Lerror, setLerror] = useState({});
     const [name, setname] = useState("");
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
-    const [agree,setagree]=useState("");
+    const [agree, setagree] = useState("");
 
-    // Signup Validation Logic
     const validateSignup = () => {
         const errors = {};
         if (!name.trim()) errors.name = "Fullname is required.";
@@ -28,11 +26,10 @@ const Login = ({ setlogin, setisLogged, setmenu,menu }) => {
         else if (password.length < 8) {
             errors.password = "Password must contain at least eight characters.";
         }
-        if(agree==="") errors.agree="Required"
+        if (agree === "") errors.agree = "Required"
         return errors;
     };
 
-    // Login Validation Logic
     const validateLogin = () => {
         const errors = {};
         if (!existingemail) errors.existingemail = "Email is required.";
@@ -46,13 +43,15 @@ const Login = ({ setlogin, setisLogged, setmenu,menu }) => {
         return errors;
     };
 
-    // Handle Signup Submission
     const addCredential = async (e) => {
         e.preventDefault();
+
         const signupError = validateSignup();
         if (Object.keys(signupError).length === 0) {
             try {
                 await axios.post("http://localhost:3001/newregister", { name, email, password });
+
+                // Display success message
                 toast.success('Account Created Successfully!', {
                     position: "top-right",
                     hideProgressBar: false,
@@ -62,10 +61,19 @@ const Login = ({ setlogin, setisLogged, setmenu,menu }) => {
                     draggable: true,
                     theme: "light",
                     transition: Slide,
-                },setcurrentState("Login"),setname(""),setemail(""),setpassword(""));
+                });
+
+                // Reset form fields and update state
+                setname("");
+                setemail("");
+                setpassword("");
+                setcurrentState("Login");
                 setSerror({});
-                 setTimeout(() => setlogin(false),30000);
+
+                // Close login modal after 30 seconds
+                setTimeout(() => setlogin(false), 30000);
             } catch (error) {
+                // Display error toast message
                 toast.error("Something went wrong. Please try again.", {
                     position: "top-right",
                     autoClose: 5000,
@@ -78,33 +86,58 @@ const Login = ({ setlogin, setisLogged, setmenu,menu }) => {
                 });
             }
         } else {
+            // Set validation errors
             setSerror(signupError);
         }
     };
 
-    // Handle Login Submission
+
+    //Handle Login Submission
     const handleLogin = async (e) => {
+        console.log(existingemail)
         e.preventDefault();
         const loginError = validateLogin();
         if (Object.keys(loginError).length === 0) {
             try {
-                const result = await axios.post('http://localhost:3001/customerdetails', { existingemail, existingpass });
-                console.log(result);
-                toast.success('Login Successfully!', {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "light",
-                    transition: Slide,
+                const response = await axios.post('http://localhost:3001/customerdetails', {
+                    existingemail,
+                    existingpass
                 });
-                setTimeout(() => setlogin(false), 1000);
-                setisLogged(true);
+                if (response.data === "Success") {
+                    toast.success('Login Successfully!', {
+                        position: "top-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        theme: "light",
+                        transition: Slide,
+                    });
+
+
+                    setTimeout(() => {
+                        setlogin(false);
+                        setisLogged(true);
+                    }, 1500);
+                } else {
+
+                    toast.error('Invalid credentials. Please try again.', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        theme: "light",
+                        transition: Slide,
+                    });
+                }
             } catch (error) {
                 console.error(error);
-                toast.error("Login Failed. Please check your credentials.", {
+
+                // Handle server or network errors
+                toast.error('Login Failed. Please try again later.', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -116,11 +149,13 @@ const Login = ({ setlogin, setisLogged, setmenu,menu }) => {
                 });
             }
         } else {
+            // Set form validation errors
             setLerror(loginError);
         }
     };
 
-    const handlePolicy=()=>{
+
+    const handlePolicy = () => {
         setlogin(false);
         setmenu("Policy");
     }
@@ -195,16 +230,16 @@ const Login = ({ setlogin, setisLogged, setmenu,menu }) => {
 
                                 <div className='login-condition'>
                                     <label className='login-conditon-input'>
-                                        <input type='checkbox' 
-                                        onChange={()=>setagree("true")}
-                                        required/>
-                                        <p>By continuing, I agree to the terms of use & privacy policy.</p>
-                                        
-                                        
+                                        <input type='checkbox'
+                                            onChange={() => setagree("true")}
+                                            required />
+                                        <p>By continuing, I agree to the <span><Link to='/TermsAndCondition' onClick={() => handlePolicy()} className={menu === "http://localhost:3000/TermsAndCondition" ? "active" : ""}>Terms</Link></span> of use & <span><Link to='/PrivacyPolicy' onClick={() => handlePolicy()} className={menu === "http://localhost:3000/PrivacyPolicy" ? "active" : ""}>Privacy policy</Link></span>.</p>
+
+
                                     </label>
                                 </div>
                                 {Serror.agree && <div id='error'>{Serror.agree}</div>}
-                                <span><Link to='/TermsAndCondition' onClick={()=>handlePolicy()} className={menu === "http://localhost:3000/TermsAndCondition" ? "active" : ""}>Terms and Condition</Link></span> 
+
                             </>
                         )}
                     </div>
