@@ -9,7 +9,7 @@
     height: auto;
     object-fit: cover;
     position: fixed;
-    top: 60px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 15px;
@@ -21,7 +21,6 @@
     position: relative;
   }
   
-  /* Down Arrow */
   .downArrow {
     position: fixed;
     top: 93vh;

@@ -1,12 +1,16 @@
 import React from 'react'
-import { useContext,useState } from 'react'
+import { useContext,useState,useEffect } from 'react'
 import './ExplorMenu.css'
 import { menu_list } from '../../assets/assets'
 import FoodItem from '../../Component/FoodItem/FoodItem'
 import { StoreContext } from '../../Context/StoreContext';
+
 const ExplorMenu = () => {
     const {food_list}=useContext(StoreContext);
     const [category,setcategory]=useState("All");
+    // useEffect(() => {
+    //   window.scrollTo(0, 0)
+    // }, [])
   return (
     <div className='menu'>
         <div className='explor-menu' id='explor-menu'>

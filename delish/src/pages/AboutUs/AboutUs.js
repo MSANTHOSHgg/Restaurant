@@ -18,7 +18,9 @@ const AboutUs = () => {
                 <h3>More Than a Meal – A Community Hub</h3>
                 <p>We’re passionate about being part of the community we serve. Delish is more than just a restaurant—it’s a space where people connect, laugh, and celebrate life’s moments. From hosting local events and charity dinners to featuring live music and food festivals, we aim to foster a sense of belonging and togetherness. We believe food has the power to bring people closer, and we’re proud to be a place where memories are made over shared plates.</p>
                 <h3>Our Promise to You</h3>
-                <p>At Delish, we are committed to sustainability, quality, and continuous improvement. We work closely with local farmers, artisans, and suppliers to reduce our environmental impact and promote responsible sourcing. Your health and satisfaction are at the heart of everything we do, and we strive to ensure that every dish, every sip, and every visit exceeds your expectations.<h4> Come for the food, stay for the experience.</h4> Whether you’re looking to indulge in your favorite comfort foods, discover bold new flavors, or simply relax with loved ones, Delish promises to make every visit a memorable one. Thank you for choosing us—we can’t wait to serve you!</p>
+                <p>At Delish, we are committed to sustainability, quality, and continuous improvement. We work closely with local farmers, artisans, and suppliers to reduce our environmental impact and promote responsible sourcing. Your health and satisfaction are at the heart of everything we do, and we strive to ensure that every dish, every sip, and every visit exceeds your expectations.</p>
+                <h4> Come for the food, stay for the experience.</h4>
+                <p> Whether you’re looking to indulge in your favorite comfort foods, discover bold new flavors, or simply relax with loved ones, Delish promises to make every visit a memorable one. Thank you for choosing us—we can’t wait to serve you!</p>
                 <h5 className='slogan'>Come hungry, leave happy—because life’s too short for anything less than Delish!</h5>
            </div>
            </div>

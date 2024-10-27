@@ -69,6 +69,20 @@ app.put("/update-delivery", async (req, res) => {
   }
 });
 
+app.get("/userdetails/:email", (req, res) => {
+  const { email } = req.params;
+  CustomerModel.findOne({ email })
+      .then((user) => {
+          if (user) {
+              res.json(user);
+          } else {
+              res.status(404).json("User not found");
+          }
+      })
+      .catch((err) => res.status(500).json("Error occurred: " + err.message));
+});
+
+
 app.listen(3001, () => {
   console.log("Server is running successfully on port 3001");
 });

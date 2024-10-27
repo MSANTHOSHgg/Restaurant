@@ -7,6 +7,7 @@ const CustomerSchema=new mongoose.Schema({
     delivery: {
       firstName: String,
       lastName: String,
+      email:String,
       street: String,
       city: String,
       state: String,

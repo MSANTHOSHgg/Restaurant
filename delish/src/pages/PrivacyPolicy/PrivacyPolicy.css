@@ -9,6 +9,10 @@
     line-height: 1.6;
     color: #333;
   }
+  .privacy-container a {
+    color: #007bff;
+    text-decoration: none;
+  }
   
  .privacy-container h1 {
     text-align: center;

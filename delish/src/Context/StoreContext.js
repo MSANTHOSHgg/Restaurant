@@ -11,7 +11,10 @@ export const StoreContextProvider = (props)=>{
             setcartItem((prev)=>({...prev,[itemid]:1}))
         }
         else{
+            const currentQuantity = cartItem[itemid] || 0;
+            if (currentQuantity < 5) {
             setcartItem((prev)=>({...prev,[itemid]:prev[itemid]+1}))
+            }
         }
     }
     const removetocart=(itemid)=>{
@@ -21,6 +24,11 @@ export const StoreContextProvider = (props)=>{
         else{
             setcartItem((prev)=>({...prev,[itemid]:prev[itemid]-1}))
         }
+    }
+
+    const remove=(itemid)=>{
+        const { [itemid]: _, ...rest } = cartItem; 
+                setcartItem(rest);
     }
     const getTotalAmount = ()=>{
         let totalAmount=0;
@@ -41,7 +49,8 @@ export const StoreContextProvider = (props)=>{
         setcartItem,
         addtocart,
         removetocart,
-        getTotalAmount
+        getTotalAmount,
+        remove
     }
 
     return(

@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CustomerDetails.css';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const CustomerDetails = ({existingemail,}) => {
-  const navigate = useNavigate();
-  
+
+const CustomerDetails = ({ customerData }) => {
   // State for form inputs
   const [formData, setFormData] = useState({
     firstName: '',
@@ -23,11 +21,26 @@ const CustomerDetails = ({existingemail,}) => {
 
   // State for tracking form errors
   const [errors, setErrors] = useState({});
+
   // Handle form input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  useEffect(() => {
+    if (customerData.delivery) {
+      setFormData(customerData.delivery);
+    }
+    else {
+      const username=customerData.name.split(' ');
+      setFormData({
+        firstName: username[0],
+        lastName: username[1],
+        email: customerData.email,
+      })
+    }
+  }, [customerData]);
 
   // Validate form fields
   const validateForm = () => {
@@ -44,48 +57,39 @@ const CustomerDetails = ({existingemail,}) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  const [email,setemail]=useState(existingemail)
+
   // Handle form submission
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(existingemail);
+    if (!validateForm()) return;
+
     try {
-        const response = await axios.put("http://localhost:3001/update-delivery", {
-            email,
-            delivery: formData,
-        });
-        toast.success('Delivery imformation updated!', {
-                    position: "top-right",
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    autoClose: 3500,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "light",
-                    transition: Slide,
-                });
-        // navigate("/");
+      const response = await axios.put("http://localhost:3001/update-delivery", {
+        email: formData.email,
+        delivery: formData,
+      });
+      toast.success('Delivery information updated!', {
+        position: "top-right",
+        hideProgressBar: false,
+        closeOnClick: true,
+        autoClose: 3500,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+        transition: Slide,
+      });
     } catch (error) {
-        toast.error("Failed to update delivery information.", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "light",
-            transition: Slide,
-        });
+      toast.error("Failed to update delivery information.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+        transition: Slide,
+      });
     }
-};
-
-  
-
-  // Handle logout
-  const logoutFn = () => {
-    console.log('logout');
-    navigate('/');
-    // Optionally, clear any session data
   };
 
   return (
@@ -188,11 +192,9 @@ const CustomerDetails = ({existingemail,}) => {
           />
           {errors.phone && <span className="error">{errors.phone}</span>}
           <div className='submitbtn'>
-          <button className="logout" type="submit" >Submit</button>
+            <button className="logout" type="submit">Submit</button>
           </div>
         </div>
-
-        
       </form>
 
       <ToastContainer />

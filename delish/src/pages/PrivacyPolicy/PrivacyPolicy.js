@@ -1,8 +1,9 @@
 // PrivacyPolicy.js
 import React from 'react';
 import './PrivacyPolicy.css'; 
+import { Link } from 'react-router-dom';
 
-const PrivacyPolicy = () => {
+const PrivacyPolicy = ({setmenu,menu}) => {
   return (
     <div className="privacy-container">
       <h1>Privacy Policy</h1>
@@ -90,12 +91,8 @@ const PrivacyPolicy = () => {
       </p>
 
       <h2>10. Contact Us</h2>
-      <p>If you have any questions, please contact us:</p>
-      <ul>
-        <li><strong>Email:</strong> [Insert Email]</li>
-        <li><strong>Phone:</strong> [Insert Phone Number]</li>
-        <li><strong>Address:</strong> [Insert Address]</li>
-      </ul>
+      <p>If you have any questions, please <span><Link to='/ContactUs' onClick={() => setmenu("ContactUs")} className={menu === "http://localhost:3000/ContactUs" ? "active" : ""}>Contact Us</Link></span>:</p>
+      
     </div>
   );
 };

@@ -5,7 +5,8 @@ import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 
-const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexistingemail}) => {
+
+const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexistingemail,setCustomerData,navigate}) => {
     const [currentState, setcurrentState] = useState("Login");
     const [existingpass, setexistingpass] = useState("");
     const [Serror, setSerror] = useState({});
@@ -14,6 +15,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
     const [agree, setagree] = useState("");
+    const [modalOpacity, setModalOpacity] = useState(1);
 
     const validateSignup = () => {
         const errors = {};
@@ -90,7 +92,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
             setSerror(signupError);
         }
     };
-
+ 
 
     //Handle Login Submission
     const handleLogin = async (e) => {
@@ -104,6 +106,8 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
                     existingpass
                 });
                 if (response.data === "Success") {
+                    const response = await axios.get(`http://localhost:3001/userdetails/${existingemail}`);
+                    setCustomerData(response.data);
                     toast.success('Login Successfully!', {
                         position: "top-right",
                         autoClose: 1500,
@@ -115,10 +119,12 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
                         transition: Slide,
                     });
 
-
+                    setModalOpacity(0);
                     setTimeout(() => {
                         setlogin(false);
                         setisLogged(true);
+                        console.log(response.data)
+                       
                     }, 1500);
                 } else {
 
@@ -163,7 +169,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
     return (
         <>
             <div className='login'>
-                <form className='login-container'>
+                <form className='login-container' style={{ opacity: modalOpacity, transition: 'opacity 1s ease' }}>
                     <div className='login-title'>
                         <h2>{currentState}</h2>
                         <img
@@ -173,7 +179,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
                         />
                     </div>
 
-                    <div className='login-input'>
+                    <div className='login-input' >
                         {currentState === "Login" ? (
                             <>
                                 <input

@@ -1,12 +1,10 @@
 import './Policy.css'
 import { Link } from 'react-router-dom';
 export const Policy = ({setmenu,menu}) => {
-    const today = new Date();
+    
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }} className='policy'>
       <h1>Terms and Conditions</h1>
-      <p><strong>Effective Date:</strong> {today.getDate()}/{today.getMonth()}/{today.getFullYear()}</p>
-
       <h2>1. General Use</h2>
       <ul>
         <li>You must be at least 18 years old or have parental consent to use this Website.</li>
@@ -18,19 +16,19 @@ export const Policy = ({setmenu,menu}) => {
       <ul>
         <li>All orders placed through the Website are subject to availability and confirmation.</li>
         <li>Prices listed may vary and are subject to change without notice.</li>
-        <li>Payments are processed securely through [insert payment processor].</li>
+        <li>Payments are processed securely through payment processor.</li>
       </ul>
 
       <h2>3. Reservations and Cancellation Policy</h2>
       <ul>
         <li>Reservations are subject to availability.</li>
-        <li>Modifications or cancellations must be made within [insert time frame].</li>
+        <li>Modifications or cancellations must be made within time frame.</li>
         <li>We may charge a cancellation fee for late cancellations or no-shows.</li>
       </ul>
 
       <h2>4. Delivery and Pickup Policy</h2>
       <ul>
-        <li>Delivery is available only within [insert service area].</li>
+        <li>Delivery is available only within service area.</li>
         <li>Estimated delivery times are approximate and may vary.</li>
         <li>Pickup orders should be collected within the designated time frame.</li>
       </ul>
@@ -66,17 +64,13 @@ export const Policy = ({setmenu,menu}) => {
 
       <h2>10. Governing Law</h2>
       <p>
-        These Terms and Conditions are governed by the laws of [insert jurisdiction]. Any disputes shall be 
-        resolved in the courts of [insert jurisdiction].
+        These Terms and Conditions are governed by the laws of jurisdiction. Any disputes shall be 
+        resolved in the courts of jurisdiction.
       </p>
 
       <h2>11. Contact Us</h2>
-      <p>If you have any questions, please contact us:</p>
-      <ul>
-        <li><strong>Email:</strong> [Insert Email]</li>
-        <li><strong>Phone:</strong> [Insert Phone Number]</li>
-        <li><strong>Address:</strong> [Insert Address]</li>
-      </ul>
+      <p>If you have any questions, please <span><Link to='/ContactUs' onClick={() => setmenu("ContactUs")} className={menu === "http://localhost:3000/ContactUs" ? "active" : ""}>Contact Us</Link></span>:</p>
+      
     </div>
   );
 };

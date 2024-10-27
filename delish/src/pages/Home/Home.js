@@ -58,11 +58,11 @@ const Home = ({ menu, setmenu }) => {
             Choose from a diverse menu featuring a delectable array of dishes
             crafted with the finest ingredients.
           </p>
-          <span>
+          
             <Link onClick={() => setmenu('Menu')} to='/Menu'>
-              View Menu
+            <span>View Menu</span>
             </Link>
-          </span>
+            
         </div>
       </div>
     </div>
