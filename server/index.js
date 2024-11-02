@@ -37,10 +37,27 @@ app.post("/customerdetails", (req, res) => {
 });
 
 
-app.post("/newregister", (req, res) => {
+const checkEmailExists = async (email) => {
+  try {
+      const user = await CustomerModel.findOne({ email });
+      return !!user; 
+  } catch (error) {
+      console.error("Database error:", error);
+      return false;
+  }
+};
+
+app.post("/newregister",async (req, res) => {
+  const { email } = req.body;
+  const emailExists = await checkEmailExists(email);
+    if (emailExists) {
+        return res.status(400).json({ error: "Email is already registered" });
+    }
+    else{
   CustomerModel.create(req.body)
     .then((customer) => res.json(customer))
     .catch((err) => res.status(500).json("Error occurred: " + err.message));
+    }
 });
 
 
@@ -51,14 +68,13 @@ app.post("/newfeedbacks", (req, res) => {
 });
 
 app.put("/update-delivery", async (req, res) => {
-  const { email, delivery } = req.body; // Email and delivery info from frontend
+  const { email, delivery } = req.body; 
   try {
       const customer = await CustomerModel.findOneAndUpdate(
-          { email }, // Find customer by email
-          { delivery }, // Update delivery information
-          { new: true, upsert: true } // Return updated doc or create if not found
+          { email }, 
+          { delivery },
+          { new: true, upsert: true } 
       );
-
       if (customer) {
           res.status(200).json({ message: "Delivery information updated", customer });
       } else {

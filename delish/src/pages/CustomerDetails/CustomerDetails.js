@@ -4,9 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const CustomerDetails = ({ customerData }) => {
-  // State for form inputs
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -19,30 +17,29 @@ const CustomerDetails = ({ customerData }) => {
     phone: '',
   });
 
-  // State for tracking form errors
   const [errors, setErrors] = useState({});
 
-  // Handle form input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   useEffect(() => {
-    if (customerData.delivery) {
-      setFormData(customerData.delivery);
-    }
-    else {
-      const username=customerData.name.split(' ');
-      setFormData({
-        firstName: username[0],
-        lastName: username[1],
-        email: customerData.email,
-      })
-    }
+    const timer = setTimeout(() => {
+      if (customerData.delivery) {
+        setFormData(customerData.delivery);
+      } else {
+        const username = customerData.name.split(' ');
+        setFormData({
+          firstName: username[0] || '',
+          lastName: username.length > 1 ? username[1] : '',
+          email: customerData.email,
+        });
+      }
+    }, 10);
+    return () => clearTimeout(timer);
   }, [customerData]);
 
-  // Validate form fields
   const validateForm = () => {
     const newErrors = {};
     if (!formData.firstName) newErrors.firstName = 'First Name is required';
@@ -58,13 +55,12 @@ const CustomerDetails = ({ customerData }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     try {
-      const response = await axios.put("http://localhost:3001/update-delivery", {
+      await axios.put("http://localhost:3001/update-delivery", {
         email: formData.email,
         delivery: formData,
       });
@@ -99,99 +95,120 @@ const CustomerDetails = ({ customerData }) => {
           <p className="title">Delivery Information</p>
 
           <div className="multi-field">
-            <input
-              type="text"
-              placeholder="First Name"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-            />
-            {errors.firstName && <span className="error">{errors.firstName}</span>}
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="First Name"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
+              {errors.firstName && <span className="error">{errors.firstName}</span>}
+            </div>
 
-            <input
-              type="text"
-              placeholder="Last Name"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="Last Name"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+              />
+              {errors.lastName && <span className="error">{errors.lastName}</span>}
+            </div>
           </div>
 
-          <input
-            type="email"
-            placeholder="Email address"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          {errors.email && <span className="error">{errors.email}</span>}
-
-          <input
-            type="text"
-            placeholder="Street"
-            name="street"
-            value={formData.street}
-            onChange={handleChange}
-            required
-          />
-          {errors.street && <span className="error">{errors.street}</span>}
-
-          <div className="multi-field">
+          <div className="input-group">
             <input
-              type="text"
-              placeholder="City"
-              name="city"
-              value={formData.city}
+              type="email"
+              placeholder="Email address"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
               required
             />
-            {errors.city && <span className="error">{errors.city}</span>}
+            {errors.email && <span className="error">{errors.email}</span>}
+          </div>
 
+          <div className="input-group">
             <input
               type="text"
-              placeholder="State"
-              name="state"
-              value={formData.state}
+              placeholder="Street"
+              name="street"
+              value={formData.street}
               onChange={handleChange}
               required
             />
-            {errors.state && <span className="error">{errors.state}</span>}
+            {errors.street && <span className="error">{errors.street}</span>}
           </div>
 
           <div className="multi-field">
-            <input
-              type="text"
-              placeholder="Pin code"
-              name="pinCode"
-              value={formData.pinCode}
-              onChange={handleChange}
-              required
-            />
-            {errors.pinCode && <span className="error">{errors.pinCode}</span>}
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="City"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                required
+              />
+              {errors.city && <span className="error">{errors.city}</span>}
+            </div>
 
-            <input
-              type="text"
-              placeholder="Country"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              required
-            />
-            {errors.country && <span className="error">{errors.country}</span>}
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="State"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                required
+              />
+              {errors.state && <span className="error">{errors.state}</span>}
+            </div>
           </div>
 
-          <input
-            type="number"
-            placeholder="Phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-          {errors.phone && <span className="error">{errors.phone}</span>}
-          <div className='submitbtn'>
+          <div className="multi-field">
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="Pin code"
+                name="pinCode"
+                value={formData.pinCode}
+                onChange={handleChange}
+                required
+              />
+              {errors.pinCode && <span className="error">{errors.pinCode}</span>}
+            </div>
+
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="Country"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                required
+              />
+              {errors.country && <span className="error">{errors.country}</span>}
+            </div>
+          </div>
+
+          <div className="input-group">
+            <input
+              type="number"
+              placeholder="Phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+            {errors.phone && <span className="error">{errors.phone}</span>}
+          </div>
+
+          <div className="submitbtn">
             <button className="logout" type="submit">Submit</button>
           </div>
         </div>

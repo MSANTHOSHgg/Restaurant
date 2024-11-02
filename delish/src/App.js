@@ -1,5 +1,5 @@
 import './App.css'
-import React, { useState } from 'react'
+import React, { useState,useEffect,useContext } from 'react'
 import Nav from './Component/Navigation/Nav'
 import Home from './pages/Home/Home'
 import { Route,Routes } from 'react-router-dom'
@@ -13,7 +13,8 @@ import {Policy} from './pages/Policy/Policy'
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
 import ContactUs from './Component/ContactUs/ContactUs'
 import ScrollToTop from './Component/ScrollToTop/ScrollToTop';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { StoreContext } from './Context/StoreContext'
 
 
 const App = () => {
@@ -22,13 +23,38 @@ const App = () => {
   const [menu, setmenu] = useState()
   const [existingemail, setexistingemail] = useState("");
   const [customerData, setCustomerData] = useState(null);
+  const [user,setUser]=useState();
   const navigate = useNavigate();  
+
+  const {setCartItem} = useContext(StoreContext);
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+        const foundUser = JSON.parse(loggedInUser);
+        setUser(foundUser);      
+        setisLogged(true);       
+        setCustomerData(foundUser);
+        
+    }
+}, []);
+
+const handleLogout = () => {
+  alert("logged out")
+  localStorage.removeItem("user");
+  setisLogged(false);
+  setUser(null); 
+  setCartItem("")
+  navigate('/')
+  window.location.reload(); 
+  
+};
 
   return (
    <>
-   {login?<Login setCustomerData={setCustomerData} navigate={navigate} setlogin={setlogin} setisLogged={setisLogged} setmenu={setmenu} menu={menu} existingemail={existingemail} setexistingemail={setexistingemail} />:<></>}
+   {login?<Login user={user} setUser={setUser} setCustomerData={setCustomerData} navigate={navigate} setlogin={setlogin} setisLogged={setisLogged} setmenu={setmenu} menu={menu} existingemail={existingemail} setexistingemail={setexistingemail} />:<></>}
     <div className='app'>
-      <Nav setlogin={setlogin}  isLogged={isLogged}  menu={menu} setmenu={setmenu}/>
+      <Nav setlogin={setlogin}  isLogged={isLogged}  menu={menu} setmenu={setmenu} handleLogout={handleLogout}/>
       <ScrollToTop />
         <Routes>
         <Route path='/' element={<Home menu={menu} setmenu={setmenu}/>}/>

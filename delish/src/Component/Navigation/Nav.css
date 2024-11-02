@@ -32,7 +32,7 @@
     align-items: center;
     gap: 40px;
 }
-.navbar button{
+.signinbtn{
     background: transparent;
     font-size: 16px;
     color: #49557e;
@@ -42,7 +42,7 @@
     cursor: pointer;
     transition: 0.3s;
 }
-.navbar button:hover{
+.signinbtn button:hover{
     background-color: #fff4f2;
 }
 .navbar .active{
@@ -52,10 +52,8 @@
 }
 .navbar-search-icon{
     position: relative;
-    border-radius: 10px;
 }
 .basket:hover{
-    
     transform: scale(1.2);
 }
 .navbar-search-icon .dot{
@@ -73,7 +71,47 @@
     border-radius: 50%;
     width: fit-content;
 }
+.profile:hover{
+    transform: scale(1.1); 
+}
 
+.profile-container {
+    position: relative;
+  }
+  
+  .logoutbtn {
+    padding: 5px 0px;
+    cursor: pointer;
+    background: rgb(250, 236, 220);
+    font-size: 16px;
+    color: #49557e;
+    border-radius: 50px;
+    border: none;
+  }
+  .logoutbtn:hover{
+    transform: scale(1.1); 
+}
+.logoutbtn img{
+    max-width: 30px;
+    max-height: 30px;
+}
+  
+.cart-tooltip {
+    display: none;
+    position: absolute;
+    top: 40px; 
+    left: 50%;
+    transform: translateX(-50%);
+    color: #49557e;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  
+  .navbar-search-icon:hover .cart-tooltip {
+    display: block;
+  } 
 
 @media (max-width:1050px){
     .navbar .logo{
@@ -121,3 +159,4 @@
     }
     
 }
+

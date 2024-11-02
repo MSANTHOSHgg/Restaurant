@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Login.css'
 import axios from 'axios'
 import { ToastContainer, toast, Slide } from 'react-toastify';
@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 
 
-const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexistingemail,setCustomerData,navigate}) => {
+const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistingemail, setCustomerData, user,setUser }) => {
     const [currentState, setcurrentState] = useState("Login");
     const [existingpass, setexistingpass] = useState("");
     const [Serror, setSerror] = useState({});
@@ -14,23 +14,79 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
     const [name, setname] = useState("");
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
-    const [agree, setagree] = useState("");
+    const [agree, setagree] = useState(false);
     const [modalOpacity, setModalOpacity] = useState(1);
 
     const validateSignup = () => {
         const errors = {};
-        if (!name.trim()) errors.name = "Fullname is required.";
-        if (!email) errors.email = "Email is required.";
-        else if (!/^[^\s@]+@[^\s@]+\.(com|in)$/.test(email)) {
+        if (!name.trim()) {
+            errors.name = "Full name is required.";
+        }
+
+        if (!email) {
+            errors.email = "Email is required.";
+        } else if (!/^[^\s@]+@[^\s@]+\.(com|in)$/.test(email) || /[A-Z]/.test(email)) {
             errors.email = "Enter a valid email address.";
         }
-        if (!password) errors.password = "Password is required.";
-        else if (password.length < 8) {
-            errors.password = "Password must contain at least eight characters.";
+
+        if (!password) {
+            errors.password = "Password is required.";
+        } else if (
+            password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password) || !/[!@#$%^&*]/.test(password)
+        ) {
+            errors.password = "Password must be at least 8 characters long, with one uppercase, one lowercase, one special character, and one numeric value.";
         }
-        if (agree === "") errors.agree = "Required"
+
+        if (!agree) {
+            errors.agree = "You must agree to the terms.";
+        }
+
         return errors;
     };
+
+    const addCredential = async (e) => {
+        e.preventDefault();
+
+        const signupError = validateSignup();
+        if (Object.keys(signupError).length === 0) {
+            try {
+
+                await axios.post("http://localhost:3001/newregister", { name, email, password });
+                toast.success("Account Created Successfully!", {
+                    position: "top-right",
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    autoClose: 3500,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "light",
+                    transition: Slide,
+                });
+
+                setname("");
+                setemail("");
+                setpassword("");
+                setcurrentState("Login");
+                setSerror({});
+                setTimeout(() => setlogin(false), 30000);
+            } catch (error) {
+                const errorMessage = error.response?.status === 400 ? "This Email is already registered" : "" || "Something went wrong. Please try again.";
+                toast.error(errorMessage, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "light",
+                    transition: Slide,
+                });
+            }
+        } else {
+            setSerror(signupError);
+        }
+    };
+
 
     const validateLogin = () => {
         const errors = {};
@@ -45,70 +101,25 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
         return errors;
     };
 
-    const addCredential = async (e) => {
-        e.preventDefault();
-
-        const signupError = validateSignup();
-        if (Object.keys(signupError).length === 0) {
-            try {
-                await axios.post("http://localhost:3001/newregister", { name, email, password });
-
-                // Display success message
-                toast.success('Account Created Successfully!', {
-                    position: "top-right",
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    autoClose: 3500,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "light",
-                    transition: Slide,
-                });
-
-                // Reset form fields and update state
-                setname("");
-                setemail("");
-                setpassword("");
-                setcurrentState("Login");
-                setSerror({});
-
-                // Close login modal after 30 seconds
-                setTimeout(() => setlogin(false), 30000);
-            } catch (error) {
-                // Display error toast message
-                toast.error("Something went wrong. Please try again.", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "light",
-                    transition: Slide,
-                });
-            }
-        } else {
-            // Set validation errors
-            setSerror(signupError);
-        }
-    };
- 
-
-    //Handle Login Submission
     const handleLogin = async (e) => {
-        console.log(existingemail)
         e.preventDefault();
         const loginError = validateLogin();
+        const userlogin = { existingemail, existingpass };
+    
         if (Object.keys(loginError).length === 0) {
             try {
-                const response = await axios.post('http://localhost:3001/customerdetails', {
-                    existingemail,
-                    existingpass
-                });
+                const response = await axios.post("http://localhost:3001/customerdetails", userlogin);
+    
                 if (response.data === "Success") {
-                    const response = await axios.get(`http://localhost:3001/userdetails/${existingemail}`);
-                    setCustomerData(response.data);
-                    toast.success('Login Successfully!', {
+                    // Assuming response1.data contains the actual user data (e.g., user profile info)
+                    const response1 = await axios.get(`http://localhost:3001/userdetails/${existingemail}`);
+                    setCustomerData(response1.data);
+    
+                    // Store meaningful user data in localStorage
+                    localStorage.setItem("user", JSON.stringify(response1.data));
+                    setUser(response1.data);  // Update the state with the user data
+                    //console.log(response1.data)
+                    toast.success("Login Successfully!", {
                         position: "top-right",
                         autoClose: 1500,
                         hideProgressBar: false,
@@ -118,17 +129,14 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
                         theme: "light",
                         transition: Slide,
                     });
-
+    
                     setModalOpacity(0);
                     setTimeout(() => {
                         setlogin(false);
                         setisLogged(true);
-                        console.log(response.data)
-                       
                     }, 1500);
                 } else {
-
-                    toast.error('Invalid credentials. Please try again.', {
+                    toast.error("Invalid credentials. Please try again.", {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -141,9 +149,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
                 }
             } catch (error) {
                 console.error(error);
-
-                // Handle server or network errors
-                toast.error('Login Failed. Please try again later.', {
+                toast.error("Login Failed. Please try again later.", {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -155,11 +161,11 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
                 });
             }
         } else {
-            // Set form validation errors
             setLerror(loginError);
         }
     };
-
+    
+        
 
     const handlePolicy = () => {
         setlogin(false);
@@ -227,7 +233,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
                                     placeholder='Password'
                                     value={password}
                                     onChange={(e) => setpassword(e.target.value)}
-                                    maxLength={8}
+                                    // maxLength={8}
                                     required
                                 />
                                 {Serror.password && <div id='error'>{Serror.password}</div>}
@@ -237,7 +243,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu ,existingemail,setexisting
                                 <div className='login-condition'>
                                     <label className='login-conditon-input'>
                                         <input type='checkbox'
-                                            onChange={() => setagree("true")}
+                                            onChange={() => setagree(true)}
                                             required />
                                         <p>By continuing, I agree to the <span><Link to='/TermsAndCondition' onClick={() => handlePolicy()} className={menu === "http://localhost:3000/TermsAndCondition" ? "active" : ""}>Terms</Link></span> of use & <span><Link to='/PrivacyPolicy' onClick={() => handlePolicy()} className={menu === "http://localhost:3000/PrivacyPolicy" ? "active" : ""}>Privacy policy</Link></span>.</p>
 

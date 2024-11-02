@@ -1,5 +1,6 @@
 import basket_icon from './basket_icon.png'
 import logo from './Restaurant_logo.png'
+import logout from './logout.png'
 import header_img from './header_img.png'
 import search_icon from './search_icon.png'
 import menu_1 from './menu_1.png'
@@ -74,6 +75,7 @@ export const assets = {
     selector_icon,
     profile_icon,
     logout_icon,
+    logout,
     bag_icon,
     parcel_icon
 }
