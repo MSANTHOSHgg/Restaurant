@@ -1,5 +1,5 @@
 import React from 'react'
-import { useContext,useState,useEffect } from 'react'
+import { useContext,useState} from 'react'
 import './ExplorMenu.css'
 import { menu_list } from '../../assets/assets'
 import FoodItem from '../../Component/FoodItem/FoodItem'
@@ -20,7 +20,7 @@ const ExplorMenu = () => {
             {menu_list.map((item,index)=>{
                 return(
                     <div onClick={()=>setcategory(category=>category===item.menu_name?"All":item.menu_name)} key={index} className='explor-menu-list-item'>
-                        <div><img src={item.menu_image} className={category===item.menu_name?"active":""}/>
+                        <div><img src={item.menu_image} alt='' className={category===item.menu_name?"active":""}/>
                         <p className={category===item.menu_name?"act":""}>{item.menu_name}</p></div>
                     </div>
                 )
@@ -39,7 +39,7 @@ const ExplorMenu = () => {
   
             return( 
               
-            <div className='food_List'>
+            <div className='food_List'  key={item._id}>
               <FoodItem
              key={item._id} 
              id={item._id} 

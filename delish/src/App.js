@@ -24,7 +24,6 @@ const App = () => {
   const [menu, setmenu] = useState()
   const [existingemail, setexistingemail] = useState("");
   const [customerData, setCustomerData] = useState(null);
-  const [user,setUser]=useState();
   const navigate = useNavigate();  
 
   const {setCartItem} = useContext(StoreContext);
@@ -32,8 +31,7 @@ const App = () => {
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
-        const foundUser = JSON.parse(loggedInUser);
-        setUser(foundUser);      
+        const foundUser = JSON.parse(loggedInUser);      
         setisLogged(true);       
         setCustomerData(foundUser);
         
@@ -44,7 +42,6 @@ const handleLogout = () => {
   alert("logged out")
   localStorage.removeItem("user");
   setisLogged(false);
-  setUser(null); 
   setCartItem("")
   navigate('/')
   window.location.reload(); 
@@ -55,7 +52,7 @@ const handleLogout = () => {
 
   return (
    <>
-   {login?<Login setUser={setUser} setCustomerData={setCustomerData} navigate={navigate} setlogin={setlogin} setisLogged={setisLogged} setmenu={setmenu} menu={menu} existingemail={existingemail} setexistingemail={setexistingemail} />:<></>}
+   {login?<Login setCustomerData={setCustomerData} navigate={navigate} setlogin={setlogin} setisLogged={setisLogged} setmenu={setmenu} menu={menu} existingemail={existingemail} setexistingemail={setexistingemail} />:<></>}
     <div className='app'>
       <Nav setlogin={setlogin}  isLogged={isLogged}  menu={menu} setmenu={setmenu} handleLogout={handleLogout}/>
       <ScrollToTop />
