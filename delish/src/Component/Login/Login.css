@@ -19,7 +19,7 @@
     border-radius: 8px;
     animation: fadeIn 0.8s;
     overflow: hidden; 
-    opacity: 1; /* Fully visible */
+    opacity: 1; 
     transition: opacity 1s ease;
 }
 .login-title{
@@ -37,12 +37,21 @@
     gap: 10px;
     flex-direction: column;
 }
+.login-input span:hover{
+    color: tomato;
+}
 .login-input input{
     outline: none;
     border: 1px solid #c9c9c9;
     padding: 10px;
     border-radius: 5px;
 }
+.login-input input:focus {
+    outline: none;
+    border-color: tomato;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+}
+
 .login-container button{
     border: none;
     padding: 10px;
@@ -50,7 +59,13 @@
     background-color: tomato;
     cursor: pointer;
     font-size: 15px;
+    transition: background-color 0.3s ease;
 }
+
+.login-container button:hover{
+    background-color: rgb(249, 121, 99);
+}
+
 .login-condition{
     display: flex;
     gap: 8px;

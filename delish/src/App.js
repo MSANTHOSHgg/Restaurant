@@ -15,6 +15,7 @@ import ContactUs from './Component/ContactUs/ContactUs'
 import ScrollToTop from './Component/ScrollToTop/ScrollToTop';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from './Context/StoreContext'
+import ChangePassword from './Component/ChangePassword/ChangePassword'
 
 
 const App = () => {
@@ -50,9 +51,11 @@ const handleLogout = () => {
   
 };
 
+
+
   return (
    <>
-   {login?<Login user={user} setUser={setUser} setCustomerData={setCustomerData} navigate={navigate} setlogin={setlogin} setisLogged={setisLogged} setmenu={setmenu} menu={menu} existingemail={existingemail} setexistingemail={setexistingemail} />:<></>}
+   {login?<Login setUser={setUser} setCustomerData={setCustomerData} navigate={navigate} setlogin={setlogin} setisLogged={setisLogged} setmenu={setmenu} menu={menu} existingemail={existingemail} setexistingemail={setexistingemail} />:<></>}
     <div className='app'>
       <Nav setlogin={setlogin}  isLogged={isLogged}  menu={menu} setmenu={setmenu} handleLogout={handleLogout}/>
       <ScrollToTop />
@@ -65,10 +68,12 @@ const handleLogout = () => {
         <Route path='/TermsAndCondition'  element={<Policy menu={menu} setmenu={setmenu}/>}/>
         <Route path='/PrivacyPolicy' element={<PrivacyPolicy menu={menu} setmenu={setmenu}/>}/>
         <Route path='/ContactUs' element={<ContactUs/>}/>
+        <Route path='/ChangePassword' element={<ChangePassword />}/>
         </Routes>
         
     </div>
     <Footer menu={menu} setmenu={setmenu}/>
+  
    </>
   )
 }

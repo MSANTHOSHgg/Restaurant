@@ -4,6 +4,7 @@ const CustomerSchema=new mongoose.Schema({
     name:String,
     email:String,
     password:String,
+    otpVerified: Boolean,
     delivery: {
       firstName: String,
       lastName: String,

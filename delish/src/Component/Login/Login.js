@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './Login.css'
 import axios from 'axios'
 import { ToastContainer, toast, Slide } from 'react-toastify';
@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 
 
-const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistingemail, setCustomerData, user,setUser }) => {
+const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistingemail, setCustomerData, setUser }) => {
     const [currentState, setcurrentState] = useState("Login");
     const [existingpass, setexistingpass] = useState("");
     const [Serror, setSerror] = useState({});
@@ -68,7 +68,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
                 setpassword("");
                 setcurrentState("Login");
                 setSerror({});
-                setTimeout(() => setlogin(false), 30000);
+                //setTimeout(() => setlogin(false), 30000);
             } catch (error) {
                 const errorMessage = error.response?.status === 400 ? "This Email is already registered" : "" || "Something went wrong. Please try again.";
                 toast.error(errorMessage, {
@@ -98,6 +98,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
         else if (existingpass.length < 8) {
             errors.existingpass = "Invalid Password.";
         }
+        
         return errors;
     };
 
@@ -105,20 +106,17 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
         e.preventDefault();
         const loginError = validateLogin();
         const userlogin = { existingemail, existingpass };
-    
+
         if (Object.keys(loginError).length === 0) {
             try {
                 const response = await axios.post("http://localhost:3001/customerdetails", userlogin);
-    
+
                 if (response.data === "Success") {
-                    // Assuming response1.data contains the actual user data (e.g., user profile info)
                     const response1 = await axios.get(`http://localhost:3001/userdetails/${existingemail}`);
                     setCustomerData(response1.data);
-    
-                    // Store meaningful user data in localStorage
+
                     localStorage.setItem("user", JSON.stringify(response1.data));
-                    setUser(response1.data);  // Update the state with the user data
-                    //console.log(response1.data)
+                    setUser(response1.data);
                     toast.success("Login Successfully!", {
                         position: "top-right",
                         autoClose: 1500,
@@ -129,7 +127,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
                         theme: "light",
                         transition: Slide,
                     });
-    
+
                     setModalOpacity(0);
                     setTimeout(() => {
                         setlogin(false);
@@ -164,8 +162,8 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
             setLerror(loginError);
         }
     };
-    
-        
+
+
 
     const handlePolicy = () => {
         setlogin(false);
@@ -205,7 +203,9 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
                                     required
                                 />
                                 {Lerror.existingpass && <div id='error'>{Lerror.existingpass}</div>}
-
+                                <span>
+                                    <Link to="/ChangePassword" onClick={() => handlePolicy()} className={menu === "http://localhost:3000/ChangePassword" ? "active" : ""}>forgot password?</Link>
+                                </span>
                                 <button type='submit' onClick={handleLogin}>Sign In</button>
                             </>
                         ) : (
@@ -258,7 +258,9 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
 
                     <p>
                         {currentState === "Login" ? (
-                            <>Create a new account? <span onClick={() => setcurrentState("Sign Up")}>Click here</span></>
+                            <>Create a new account? <span onClick={() => setcurrentState("Sign Up")}>Click here</span><br />
+                                
+                            </>
                         ) : (
                             <>Already have an account? <span onClick={() => setcurrentState("Login")}>Login here</span></>
                         )}
