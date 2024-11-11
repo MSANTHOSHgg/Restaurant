@@ -4,9 +4,9 @@ import axios from 'axios'
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
+import cross from '../../assets/cross_icon.png'
 
-
-const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistingemail, setCustomerData, setUser }) => {
+const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistingemail, setCustomerData }) => {
     const [currentState, setcurrentState] = useState("Login");
     const [existingpass, setexistingpass] = useState("");
     const [Serror, setSerror] = useState({});
@@ -87,7 +87,6 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
         }
     };
 
-
     const validateLogin = () => {
         const errors = {};
         if (!existingemail) errors.existingemail = "Email is required.";
@@ -116,7 +115,6 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
                     setCustomerData(response1.data);
 
                     localStorage.setItem("user", JSON.stringify(response1.data));
-                    setUser(response1.data);
                     toast.success("Login Successfully!", {
                         position: "top-right",
                         autoClose: 1500,
@@ -178,7 +176,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
                         <h2>{currentState}</h2>
                         <img
                             onClick={() => setlogin(false)}
-                            src={require('../../assets/cross_icon.png')}
+                            src={cross}
                             alt="Close"
                         />
                     </div>

@@ -5,7 +5,6 @@ import video from '../../assets/delish.mp4';
 import downArrow from '../../assets/arrowd.png';
 
 const Home = ({ menu, setmenu }) => {
-  // Handle video and arrow visibility on scroll
   useEffect(() => {
     const handleScroll = () => {
       const videoElement = document.querySelector('.bgvideo video');
@@ -28,19 +27,16 @@ const Home = ({ menu, setmenu }) => {
     };
   }, []);
 
-  // Scroll to content section on arrow click
   const scrollToContent = () => {
     window.scrollTo({ top: 675, behavior: 'smooth' });
   };
 
   return (
     <div className='homevideo'>
-      {/* Background Video Section */}
       <div className='bgvideo'>
         <video src={video} autoPlay loop muted />
       </div>
 
-      {/* Scroll Down Arrow */}
       <div className='div_arrow'>
         <img
           onClick={scrollToContent}
@@ -50,7 +46,6 @@ const Home = ({ menu, setmenu }) => {
         />
       </div>
 
-      {/* Header Section */}
       <div className='header'>
         <div className='header-content'>
           <h2>Order your favourite food here..</h2>

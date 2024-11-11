@@ -58,8 +58,18 @@ import profile_icon from './profile_icon.png'
 import bag_icon from './bag_icon.png'
 import logout_icon from './logout_icon.png'
 import parcel_icon from './parcel_icon.png'
+import sendimg from '../assets/send.png'
+import contactimg from '../assets/Phone.png'
+import emailimg from '../assets/email.png'
+import locationimg from '../assets/location.png'
+import zoomimg from '../assets/expand.png'
 
 export const assets = {
+    sendimg,
+    contactimg,
+    emailimg,
+    locationimg,
+    zoomimg,
     logo,
     basket_icon,
     header_img,

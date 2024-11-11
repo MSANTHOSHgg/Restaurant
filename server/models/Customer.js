@@ -20,7 +20,6 @@ const CustomerSchema=new mongoose.Schema({
 
 const CustomerModel = mongoose.model("customerdetails",CustomerSchema)
 
-// contact schema
 const ContactSchema = new mongoose.Schema({
     name: String,
     email: String,

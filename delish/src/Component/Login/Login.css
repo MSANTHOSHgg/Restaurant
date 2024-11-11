@@ -42,14 +42,16 @@
 }
 .login-input input{
     outline: none;
-    border: 1px solid #c9c9c9;
+    border: none;
+    border-bottom: 1px solid #c9c9c9;
     padding: 10px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
 }
+
 .login-input input:focus {
     outline: none;
     border-color: tomato;
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+    box-shadow: 0 0 5px rgba(254, 140, 26, 0.3);
 }
 
 .login-container button{
