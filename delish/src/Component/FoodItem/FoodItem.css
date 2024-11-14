@@ -91,6 +91,11 @@ border-radius: 50%;
     transition: background-color 1s ease;
     color: red;
 }
+.food-item-counter .grey{
+    border: 1px solid rgb(123, 124, 123);
+    background-color: rgb(133, 135, 132);
+    color: rgb(212, 216, 212);
+}
 
 .food-item-counter .green:active{
     background-color: rgb(84, 232, 84);

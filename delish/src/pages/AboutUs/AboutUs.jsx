@@ -1,11 +1,10 @@
 import React from 'react'
 import './AboutUs.css'
-// import { assets } from '../../assets/assets'
-// import AboutUsbg from '../../assets/AboutUSbg.jpeg'
+
 const AboutUs = () => {
     return (
 
-        <div className='AboutUs' id='AboutUs'>
+        <div className='AboutUs' id='AboutUs' >
             <div className='AboutUs-content-top'>
                 <h1>ABOUT US</h1>
             </div>

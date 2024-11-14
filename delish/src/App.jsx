@@ -16,6 +16,7 @@ import ScrollToTop from './Component/ScrollToTop/ScrollToTop';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from './Context/StoreContext'
 import ChangePassword from './Component/ChangePassword/ChangePassword'
+import { SideNav } from './Component/SideNav/SideNav'
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
   const [menu, setmenu] = useState()
   const [existingemail, setexistingemail] = useState("");
   const [customerData, setCustomerData] = useState(null);
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const navigate = useNavigate();
 
   const { setCartItem } = useContext(StoreContext);
@@ -55,13 +57,22 @@ const App = () => {
 
   };
 
+  const toggleSideNav = () => {
+    if (isSideNavOpen)
+      setIsSideNavOpen(false);
+    else
+      setIsSideNavOpen(true)
+  };
 
 
   return (
     <>
       {login ? <Login setCustomerData={setCustomerData} navigate={navigate} setlogin={setlogin} setisLogged={setisLogged} setmenu={setmenu} menu={menu} existingemail={existingemail} setexistingemail={setexistingemail} /> : <></>}
-      <div className='app'>
-        <Nav setlogin={setlogin} isLogged={isLogged} menu={menu} setmenu={setmenu} handleLogout={handleLogout} />
+      <div className='app' >
+        <Nav setlogin={setlogin} isLogged={isLogged} menu={menu} setmenu={setmenu} handleLogout={handleLogout} toggleSideNav={toggleSideNav} />
+        {isSideNavOpen && (
+          <SideNav menu={menu} setmenu={setmenu} toggleSideNav={toggleSideNav} closeSideNav={() => setIsSideNavOpen(false)} />
+        )}
         <ScrollToTop />
         <Routes>
           <Route path='/' element={<Home menu={menu} setmenu={setmenu} />} />

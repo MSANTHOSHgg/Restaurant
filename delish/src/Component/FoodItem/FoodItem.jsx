@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 import './FoodItem.css'
 import { assets } from '../../assets/assets'
 import { StoreContext } from '../../Context/StoreContext';
-const FoodItem = ({id,name,price,description,image}) => {
+const FoodItem = ({ id, name, price, description, image }) => {
     // const [countItem,setcountItem]=useState(0);
-    const {cartItem,addtocart,removetocart}=useContext(StoreContext)
-  return (
+    const { cartItem, addtocart, removetocart } = useContext(StoreContext)
+    const maxQuantity = 5;
+    return (
     <div className='food-item'>
         <div className='food-item-img-container'>
             <img className='food-item-img' src={image}></img>
@@ -13,7 +14,8 @@ const FoodItem = ({id,name,price,description,image}) => {
             :<div className='food-item-counter'>
                 <button onClick={()=>removetocart(id)} className='red'>-</button>
                 <p>{cartItem[id]}</p>
-                <button onClick={()=>addtocart(id)} className='green'>+</button>
+                <button onClick={()=>addtocart(id)} 
+                className={cartItem[id] < maxQuantity ? 'green' : 'grey'}>+</button>
             </div> }
         </div>
         <div className='food-item-info'>
@@ -24,7 +26,7 @@ const FoodItem = ({id,name,price,description,image}) => {
             <p className='food-item-des'>{description}</p>
             <p className='food-item-price'>Rs.{price}</p>
         </div>
-    </div>
+    </div >
   )
 }
 

@@ -1,37 +1,41 @@
-import React, { useContext } from 'react'
-import './CartItems.css'
-import empty from  '../../assets/empty1.png'
-import { StoreContext } from '../../Context/StoreContext'
-const CartItems = () => {
-    const { cartItem, food_list, removetocart, getTotalAmount, addtocart,remove } = useContext(StoreContext);
+import React, { useContext } from 'react';
+import './CartItems.css';
+import empty from '../../assets/empty1.png';
+import { StoreContext } from '../../Context/StoreContext';
 
-    
+const CartItems = () => {
+    const { cartItem, food_list, removetocart, getTotalAmount, addtocart, remove } = useContext(StoreContext);
+    const totalAmount = getTotalAmount();
+
     return (
         <div className='cart'>
             <div className='cart-items'>
-                {food_list.some(item => cartItem[item._id] >0)?
-                            <div><div className='cart-items-title'>
-                                <p>Items</p>
-                                <p>Title</p>
-                                <p>Price</p>
-                                <p>Quantity</p>
-                                <p  >Total</p>
-                                <p>Remove</p>
-                            </div>
-                                <br />
-                                <hr /></div>
-                                :<div className='cart-NoItems'>
-                                    <p>Oops! your cart is empty...</p>
-                                    <img src={empty}/>
-                                    </div>
-                    }
-                <div className={'cart-list-scroll'} style={{ overflowY: Object.values(cartItem).some(value => value > 3) ? "visible" : "auto" }}>
-                    {food_list.map((item, index) => {
+                {food_list.some(item => cartItem[item._id] > 0) ? (
+                    <div>
+                        <div className='cart-items-title'>
+                            <p>Items</p>
+                            <p>Title</p>
+                            <p>Price</p>
+                            <p>Quantity</p>
+                            <p>Total</p>
+                            <p>Remove</p>
+                        </div>
+                        <br />
+                        <hr />
+                    </div>
+                ) : (
+                    <div className='cart-NoItems'>
+                        <p>Oops! your cart is empty...</p>
+                        <img src={empty} alt="Empty cart" />
+                    </div>
+                )}
+                <div className='cart-list-scroll' style={{ overflowY: food_list.filter(item => cartItem[item._id] > 0).length > 3 ? 'auto' : 'visible' }}>
+                    {food_list.map((item) => {
                         if (cartItem[item._id] > 0) {
                             return (
-                                <div>
-                                    <div className='cart-items-item' key={item._id}>
-                                        <img src={item.image} />
+                                <div key={item._id}>
+                                    <div className='cart-items-item'>
+                                        <img src={item.image} alt={item.name} />
                                         <p>{item.name}</p>
                                         <p>₹{item.price}</p>
                                         <span className='quan'>
@@ -46,31 +50,33 @@ const CartItems = () => {
                                 </div>
                             );
                         }
+                        return null;
                     })}
                 </div>
             </div>
+            {food_list.some(item => cartItem[item._id] > 0) &&(
             <div className='cart-bottom'>
                 <div className='cart-total'>
                     <h2>Cart Total</h2>
                     <div className='cart-total-details'>
                         <p>Subtotal</p>
-                        <p>₹{getTotalAmount()}</p>
+                        <p>₹{!isNaN(totalAmount) ? totalAmount : 0}</p>
                     </div>
                     <hr />
                     <div className='cart-total-details'>
                         <p>Delivery Fee</p>
-                        <p>₹{getTotalAmount() === 0 ? 0 : 25}</p>
+                        <p>₹{totalAmount === 0 ? 0 : 25}</p>
                     </div>
                     <hr />
                     <div className='cart-total-details'>
                         <p>Total</p>
-                        <p className='Final-total'>₹{getTotalAmount() === 0 ? 0 : getTotalAmount() + 20}</p>
+                        <p className='Final-total'>₹{totalAmount === 0 ? 0 : totalAmount + 25}</p>
                     </div>
                     <button>PROCEED TO PAYMENT</button>
                 </div>
-            </div>
+            </div>)}
         </div>
-    )
-}
+    );
+};
 
-export default CartItems
+export default CartItems;

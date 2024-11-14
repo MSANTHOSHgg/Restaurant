@@ -63,8 +63,10 @@ import contactimg from '../assets/Phone.png'
 import emailimg from '../assets/email.png'
 import locationimg from '../assets/location.png'
 import zoomimg from '../assets/expand.png'
+import navimg from '../assets/navigation-bar.png'
 
 export const assets = {
+    navimg,
     sendimg,
     contactimg,
     emailimg,

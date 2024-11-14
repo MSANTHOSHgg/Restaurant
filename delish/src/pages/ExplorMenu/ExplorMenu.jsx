@@ -8,11 +8,9 @@ import { StoreContext } from '../../Context/StoreContext';
 const ExplorMenu = () => {
     const {food_list}=useContext(StoreContext);
     const [category,setcategory]=useState("All");
-    // useEffect(() => {
-    //   window.scrollTo(0, 0)
-    // }, [])
+    
   return (
-    <div className='menu'>
+    <div className='menu' >
         <div className='explor-menu' id='explor-menu'>
         <h1>Explore our menu</h1>
         <p className='explor-menu-text'>Find your favorite dish from our extensive menu, offering a range of culinary delights.</p>

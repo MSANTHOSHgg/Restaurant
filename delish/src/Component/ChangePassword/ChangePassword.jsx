@@ -155,7 +155,7 @@ const ChangePassword = () => {
     return (
         <><ToastContainer />
             {!updatepass ? (
-                <div className='ChangePassword'>
+                <div className='ChangePassword' >
                 <h1>Change Password</h1>
                 <div className='changePassword-container'>
                     <div>

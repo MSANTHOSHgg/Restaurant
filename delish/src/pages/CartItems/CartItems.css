@@ -1,12 +1,12 @@
-.cart{
+.cart {
     margin-top: 50px;
     min-height: 55.5vh;
     padding: 0 5vw;
 }
-.cart-items{
-    width: 60vw;
+.cart-items {
+    width: 65%;
 }
-.cart-items-title{
+.cart-items-title {
     display: grid;   
     grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.3fr;
     align-items: center;
@@ -14,7 +14,7 @@
     width: 55vw;
     font-size: 15px;
 }
-.cart-items-item{
+.cart-items-item {
     width: 55vw;
     margin: 10px 0;
     color: grey;
@@ -24,147 +24,181 @@
     align-items: center;
 }
 
-.cart-list-scroll{
+.cart-list-scroll {
     height: 30vh;
     width: 100%;
     overflow-y: scroll;
 }
 .cart-list-scroll::-webkit-scrollbar {
     width: 4px;
-  }
-  
+}
 .cart-list-scroll::-webkit-scrollbar-track {
     background: #f1f1f1;
-  }
-  
+}
 .cart-list-scroll::-webkit-scrollbar-thumb {
     background: tomato;
-  }
-  
+}
 .cart-list-scroll::-webkit-scrollbar-thumb:hover {
     background: rgb(252, 150, 132);
-  } 
+}
 
-.cart-items-item img{
+.cart-items-item img {
     width: 50px;
     border-radius: 5px;
 }
-.cart hr{
+.cart hr {
     width: 100%;
     height: 1px;
     background-color: #e2e2e2;
     border: none;
 }
-.cross{
+.cross {
     cursor: pointer;
     text-align: center;
     font-size: 22px;
-    background-color:#555;
+    background-color: #555;
     color: #fff;
     border-radius: 50px;
     padding: 0;
     margin: 0 10px;
     border: none;
 }
-.cross:hover{
+.cross:hover {
     background-color: black;
 }
-.cart-bottom{
-    width: 25%;
+.cart-bottom {
+    width: 25vw;
     margin-top: 70px;
     display: flex;
     justify-content: space-between;
-    gap:10px;
+    gap: 10px;
 }
-.cart-total{
-    position:absolute;
-    top: 140px;
-    right: 150px;
+.cart-total {
+    width: 20%;
+    position: absolute;
+    top: 150px;
+    right: 60px;
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.cart-total-details{
+.cart-total-details {
     display: flex;
     justify-content: space-between;
     color: #555;
 }
-.cart-total hr{
+.cart-total hr {
     margin: 10px 0;
     width: 100%;
 }
-.cart-total button{
+.cart-total button {
     border: none;
     color: #fff;
     background-color: tomato;
-    width: 200px;
+    width: 100%;
     margin-top: 10px;
     padding: 12px 0;
     border-radius: 5px;
 }
-.Final-total{
+.Final-total {
     font-weight: 800;
 }
 
-
-
-
-.quan{
+.quan {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 80px;
 }
-.quan p{
-    
+.quan p {
     font-weight: 500;
     width: 9px;
     display: flex;
     justify-content: center;
 }
-.quan button{
-    width: 25px;
+.quan button {
+    width: 30px;
+    height: 30px;
     background-color: white;
-    border-radius: 35%;
+    border-radius: 50%;
     font-size: 18px;
     font-weight: 600;
-    height: 25px;
     display: flex;
     align-items: center;
     border: none;
     justify-content: center;
+    cursor: pointer;
 }
 
-.quan .green{
+.quan .green {
     border: 1px solid rgb(161, 249, 161);
     background-color: greenyellow;
     color: green;
-    transition: background-color 1s ease;
+    transition: background-color 0.3s ease;
 }
-.quan .red{
+.quan .red {
     background-color: rgb(249, 167, 167);
-    transition: background-color 1s ease;
+    transition: background-color 0.3s ease;
     color: red;
 }
 
-.quan .green:active{
+.quan .green:active {
     background-color: rgb(84, 232, 84);
 }
-.quan .red:active{
+.quan .red:active {
     background-color: rgb(255, 120, 120);
 }
 
-.cart-NoItems{
+.cart-NoItems {
     font-size: larger;
     position: absolute;
-    top: 18vh;
-    left: 35vw;
-
+    top: 20vh;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
 }
 
-@media(max-width:750px){
-    .cart-bottom{
-        flex-direction: column-reverse;
+@media (max-width: 750px) {
+    .cart {
+        padding: 0 2vw;
     }
+    .cart-items {
+        width: 100%;
+        /* font-size: 4px; */
+    }
+    .cart-items-title, .cart-items-item {
+        width: 100%;
+        grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr;
+        font-size: 13px;
+        text-align: center;font-size: 10px;
+    }
+    .cart-bottom {
+        margin-top: 10px;
+        width: 100%;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .cart-total {
+        max-width:65%;
+        font-size: 10px;
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 100%;
+        padding: 10px 0;
+        
+    }
+    .cart-total button {
+        width: 100%;
+    }
+    .cart-list-scroll {
+        height: 20%;
+        width: 100%;
+    }
+    .quan button{
+        width: 20px;
+        height: 20px;
+    }
+    
 }

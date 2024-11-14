@@ -4,7 +4,7 @@ import './Home.css';
 import video from '../../assets/delish.mp4';
 import downArrow from '../../assets/arrowd.png';
 
-const Home = ({ menu, setmenu }) => {
+const Home = ({ setmenu }) => {
   useEffect(() => {
     const handleScroll = () => {
       const videoElement = document.querySelector('.bgvideo video');
@@ -28,7 +28,7 @@ const Home = ({ menu, setmenu }) => {
   }, []);
 
   const scrollToContent = () => {
-    window.scrollTo({ top: 675, behavior: 'smooth' });
+    window.scrollTo({ top: 800, behavior: 'smooth' });
   };
 
   return (
