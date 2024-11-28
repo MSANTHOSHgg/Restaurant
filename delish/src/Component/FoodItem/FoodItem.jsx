@@ -3,7 +3,6 @@ import './FoodItem.css'
 import { assets } from '../../assets/assets'
 import { StoreContext } from '../../Context/StoreContext';
 const FoodItem = ({ id, name, price, description, image }) => {
-    // const [countItem,setcountItem]=useState(0);
     const { cartItem, addtocart, removetocart } = useContext(StoreContext)
     const maxQuantity = 5;
     return (

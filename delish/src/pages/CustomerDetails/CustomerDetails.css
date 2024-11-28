@@ -36,7 +36,6 @@
     font-size: 16px;
 }
 
-/* For fields grouped side by side */
 .place-order-left .multi-field {
     display: flex;
     gap: 10px;
@@ -46,7 +45,7 @@
     flex: 1;
 }
 
-.submitbtn{
+.submitbtn1{
     max-width: 100%;
     display: flex;
     justify-content: center;

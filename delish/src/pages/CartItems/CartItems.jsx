@@ -2,11 +2,22 @@ import React, { useContext } from 'react';
 import './CartItems.css';
 import empty from '../../assets/empty1.png';
 import { StoreContext } from '../../Context/StoreContext';
+import { useNavigate } from 'react-router-dom';
 
-const CartItems = () => {
+const CartItems = ({isLogged,setlogin}) => {
     const { cartItem, food_list, removetocart, getTotalAmount, addtocart, remove } = useContext(StoreContext);
     const totalAmount = getTotalAmount();
+    const navigate = useNavigate();
 
+
+    const handlePayment=()=>{
+        if(isLogged){
+            navigate(`/Payment`)
+        }
+        else{
+            setlogin(true);
+        }
+    }
     return (
         <div className='cart'>
             <div className='cart-items'>
@@ -72,7 +83,7 @@ const CartItems = () => {
                         <p>Total</p>
                         <p className='Final-total'>₹{totalAmount === 0 ? 0 : totalAmount + 25}</p>
                     </div>
-                    <button>PROCEED TO PAYMENT</button>
+                    <button onClick={() => navigate(`/Payment`)}>PROCEED TO PAYMENT</button>
                 </div>
             </div>)}
         </div>

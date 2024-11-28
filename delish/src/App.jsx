@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { StoreContext } from './Context/StoreContext'
 import ChangePassword from './Component/ChangePassword/ChangePassword'
 import { SideNav } from './Component/SideNav/SideNav'
+import { Payment } from './pages/Payment/Payment'
 
 
 const App = () => {
@@ -29,6 +30,18 @@ const App = () => {
   const navigate = useNavigate();
 
   const { setCartItem } = useContext(StoreContext);
+
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    street: '',
+    city: '',
+    state: '',
+    pinCode: '',
+    country: '',
+    phone: '',
+  });
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
@@ -76,14 +89,15 @@ const App = () => {
         <ScrollToTop />
         <Routes>
           <Route path='/' element={<Home menu={menu} setmenu={setmenu} />} />
-          <Route path='/Cart' element={<CartItems />} />
+          <Route path='/Cart' element={<CartItems isLogged={isLogged} setlogin={setlogin}/>} />
           <Route path='/Menu' element={<ExplorMenu />} />
           <Route path='/AboutUs' element={<AboutUs />} />
-          <Route path='/Profile' element={<CustomerDetails customerData={customerData} existingemail={existingemail} navigate={navigate} />} />
+          <Route path='/Profile' element={<CustomerDetails customerData={customerData} existingemail={existingemail} navigate={navigate} formData={formData} setFormData={setFormData}/>} />
           <Route path='/TermsAndCondition' element={<Policy menu={menu} setmenu={setmenu} />} />
           <Route path='/PrivacyPolicy' element={<PrivacyPolicy menu={menu} setmenu={setmenu} />} />
           <Route path='/ContactUs' element={<ContactUs />} />
           <Route path='/ChangePassword' element={<ChangePassword />} />
+          <Route path='/Payment' element={<Payment customerData={customerData} formData={formData} setFormData={setFormData}/>}/>
         </Routes>
 
       </div>

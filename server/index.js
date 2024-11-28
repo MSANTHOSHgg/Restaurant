@@ -7,26 +7,29 @@ const bcrypt = require('bcryptjs');
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const { CustomerModel, ContactModel } = require("./models/Customer");
+const { CustomerModel, ContactModel, AddressModel } = require("./models/Customer");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 
+//Local DataBase
+// mongoose
+//   .connect("mongodb://localhost:27017/CustomerInformation")
+//   .then(() => console.log("Connected to MongoDB"))
+//   .catch((err) => console.error("Failed to connect to MongoDB:", err));
 
-mongoose
-  .connect("mongodb://localhost:27017/CustomerInformation")
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Failed to connect to MongoDB:", err));
+//For Atlas
+const connectdb = require('./config/db');
+connectdb();
 
-
-app.post("/customerdetails",async (req, res) => {
+app.post("/customerdetails", async (req, res) => {
   const { existingemail, existingpass } = req.body;
   try {
     const user = await CustomerModel.findOne({ email: existingemail });
     if (user) {
-      const isMatch = await bcrypt.compare(existingpass, user.password); 
+      const isMatch = await bcrypt.compare(existingpass, user.password);
       if (isMatch) {
         res.json("Success");
         console.log("Login attempt with email:", existingemail);
@@ -70,9 +73,9 @@ app.post("/newregister", async (req, res) => {
 
     const newCustomer = await CustomerModel.create({
       ...req.body,
-      password: hashedPassword 
+      password: hashedPassword
     });
-    res.status(201).json(newCustomer); 
+    res.status(201).json(newCustomer);
   } catch (err) {
     res.status(500).json({ error: "Error occurred: " + err.message });
   }
@@ -84,7 +87,7 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: process.env.EMAIL_USER, 
+    user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
 });
@@ -98,43 +101,88 @@ transporter.verify((error, success) => {
 });
 
 
-app.post("/newfeedbacks",async (req, res) => {
+app.post("/newfeedbacks", async (req, res) => {
   try {
     const contact = await ContactModel.create(req.body);
 
     const mailOptions = {
-        from: process.env.EMAIL_USER, 
-        to: req.body.email, 
-        subject: 'Contact Form Submission',
-        text: `Hello ${req.body.name},\n\nThank you for reaching out to us! We’ve received your message and will get back to you as soon as possible. In the meantime, if you have any further questions, feel free to reply to this email.\n\nBest regards,\nThe ContactForm Team`,
+      from: process.env.EMAIL_USER,
+      to: req.body.email,
+      subject: 'Contact Form Submission',
+      text: `Hello ${req.body.name},\n\nThank you for reaching out to us! We’ve received your message and will get back to you as soon as possible. In the meantime, if you have any further questions, feel free to reply to this email.\n\nBest regards,\nThe ContactForm Team`,
     };
 
     await transporter.sendMail(mailOptions);
-    
+
     res.status(200).json({ message: 'Success' });
-} catch (error) {
-    console.error('Error:', error); 
+  } catch (error) {
+    console.error('Error:', error);
     res.status(500).json({ message: 'An error occurred', error: error.message });
-}
+  }
 });
 
 app.put("/update-delivery", async (req, res) => {
   const { email, delivery } = req.body;
+  if (!email || !delivery) {
+    return res.status(400).json({ message: "Email and delivery information are required" });
+  }
+
   try {
     const customer = await CustomerModel.findOneAndUpdate(
       { email },
       { delivery },
       { new: true, upsert: true }
     );
-    if (customer) {
-      res.status(200).json({ message: "Delivery information updated", customer });
-    } else {
-      res.status(404).json({ message: "Customer not found" });
+
+    if (!customer) {
+      return res.status(404).json({ message: "Customer not found" });
     }
+
+    const {
+      firstName,
+      lastName,
+      street,
+      city,
+      state,
+      pinCode,
+      country,
+      phone,
+    } = delivery;
+
+    const existingAddress = await AddressModel.findOne({ email });
+    if (existingAddress) {
+      existingAddress.firstName = firstName;
+      existingAddress.lastName = lastName;
+      existingAddress.street = street;
+      existingAddress.city = city;
+      existingAddress.state = state;
+      existingAddress.pinCode = pinCode;
+      existingAddress.country = country;
+      existingAddress.phone = phone;
+
+      await existingAddress.save();
+    } else {
+      const newAddress = new AddressModel({
+        email,
+        firstName,
+        lastName,
+        street,
+        city,
+        state,
+        pinCode,
+        country,
+        phone,
+      });
+
+      await newAddress.save();
+    }
+
+    res.status(200).json({ message: "Delivery information updated successfully", customer });
   } catch (error) {
     res.status(500).json({ message: "Error updating delivery information", error });
   }
 });
+
 
 app.get("/userdetails/:email", (req, res) => {
   const { email } = req.params;
@@ -151,7 +199,7 @@ app.get("/userdetails/:email", (req, res) => {
 
 
 
-const generateOTP = () =>Math.floor(1000 + Math.random() * 9000).toString();
+const generateOTP = () => Math.floor(1000 + Math.random() * 9000).toString();
 
 const otpStore = {};
 
@@ -161,28 +209,28 @@ app.post('/send-otp', async (req, res) => {
   if (!email) return res.status(400).json({ message: 'Email is required' });
 
   const otp = generateOTP();
-  const expiration = Date.now() + 1 * 60 * 1000*0.5; 
+  const expiration = Date.now() + 1 * 60 * 1000 * 0.5;
   otpStore[email] = { otp, expiration };
-  
+
   const mailOptions = {
-    from: process.env.EMAIL_USER, 
+    from: process.env.EMAIL_USER,
     to: email,
     subject: 'Your OTP Code - [Delish]',
     text: `Your OTP code is ${otp}. It is valid for 30 seconds.`,
   };
-  
+
 
   try {
     await transporter.sendMail(mailOptions);
     res.status(200).json({ message: 'OTP sent successfully' });
   } catch (error) {
-    console.error('Error sending email:', error); 
+    console.error('Error sending email:', error);
     res.status(500).json({ message: 'Failed to send OTP', error: error.message });
   }
 });
 
 
-app.post('/verify-otp',async (req, res) => {
+app.post('/verify-otp', async (req, res) => {
   const { email, otp } = req.body;
 
   if (!otpStore[email]) {
@@ -192,13 +240,13 @@ app.post('/verify-otp',async (req, res) => {
   const { otp: storedOtp, expiration } = otpStore[email];
   if (storedOtp === otp && Date.now() < expiration) {
     await CustomerModel.updateOne({ email }, { otpVerified: true });
-    delete otpStore[email]; 
+    delete otpStore[email];
     return res.status(200).json({ message: 'OTP verified successfully' });
   } else {
     delete storedOtp;
     return res.status(400).json({ message: 'Invalid or expired OTP' });
   }
-   
+
 
 
 });
@@ -210,7 +258,7 @@ app.post('/change-password', async (req, res) => {
     return res.status(400).json({ message: 'Email and password are required' });
   }
 
-  const user = await CustomerModel.findOne({ email });
+  const user = await CustomerModel.completed({ email });
   if (!user) {
     return res.status(404).json({ message: 'No account found with this email' });
   }
@@ -221,13 +269,58 @@ app.post('/change-password', async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
   user.password = hashedPassword;
-  user.otpVerified = false; 
+  user.otpVerified = false;
   await user.save();
 
   res.status(200).json({ message: 'Password changed successfully' });
+});
+
+app.post("/customeraddress", async (req, res) => {
+  const { email, firstName, lastName, street, city, state, pinCode, country, phone } = req.body;
+
+  if (!email || !firstName || !lastName || !street || !city || !state || !pinCode || !country || !phone) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+  try {
+    const newAddress = new AddressModel({
+      email,
+      firstName,
+      lastName,
+      street,
+      city,
+      state,
+      pinCode,
+      country,
+      phone,
+    });
+    await newAddress.save();
+    res.status(201).json({ message: "Address saved successfully.", address: newAddress });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ message: "Error saving address.", error: err.message });
+  }
+});
+
+
+app.get("/customer-address", async (req, res) => {
+  const { email } = req.query;
+  if (!email) {
+    return res.status(400).json({ message: "Email is required." });
+  }
+  try {
+    const address = await AddressModel.findOne({ email });
+    if (!address) {
+      return res.status(404).json({ message: "Address not found." });
+    }
+    res.json(address);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error fetching address." });
+  }
 });
 
 
 app.listen(3001, () => {
   console.log("Server is running successfully on port 3001");
 });
+

@@ -4,18 +4,8 @@ import axios from 'axios';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const CustomerDetails = ({ customerData }) => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    street: '',
-    city: '',
-    state: '',
-    pinCode: '',
-    country: '',
-    phone: '',
-  });
+const CustomerDetails = ({ customerData ,setFormData,formData}) => {
+  
 
   const [errors, setErrors] = useState({});
 
@@ -208,7 +198,7 @@ const CustomerDetails = ({ customerData }) => {
             {errors.phone && <span className="error">{errors.phone}</span>}
           </div>
 
-          <div className="submitbtn">
+          <div className="submitbtn1">
             <button className="logout" type="submit">Submit</button>
           </div>
         </div>
