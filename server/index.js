@@ -276,25 +276,10 @@ app.post('/change-password', async (req, res) => {
 });
 
 app.post("/customeraddress", async (req, res) => {
-  const { email, firstName, lastName, street, city, state, pinCode, country, phone } = req.body;
 
-  if (!email || !firstName || !lastName || !street || !city || !state || !pinCode || !country || !phone) {
-    return res.status(400).json({ message: "All fields are required." });
-  }
   try {
-    const newAddress = new AddressModel({
-      email,
-      firstName,
-      lastName,
-      street,
-      city,
-      state,
-      pinCode,
-      country,
-      phone,
-    });
-    await newAddress.save();
-    res.status(201).json({ message: "Address saved successfully.", address: newAddress });
+    const Address = await AddressModel.create(req.body);
+    res.status(201).json(Address);
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ message: "Error saving address.", error: err.message });
@@ -302,13 +287,14 @@ app.post("/customeraddress", async (req, res) => {
 });
 
 
-app.get("/customer-address", async (req, res) => {
+app.get("/customeraddress", async (req, res) => {
   const { email } = req.query;
   if (!email) {
+    console.log("No email")
     return res.status(400).json({ message: "Email is required." });
   }
   try {
-    const address = await AddressModel.findOne({ email });
+    const address = await AddressModel.find({ email });
     if (!address) {
       return res.status(404).json({ message: "Address not found." });
     }
@@ -316,6 +302,47 @@ app.get("/customer-address", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error fetching address." });
+  }
+});
+
+app.put("/customeraddress/:id", async (req, res) => {
+  const { id } = req.params;
+  const { email, firstName, lastName, street, city, state, pinCode, country, phone } = req.body;
+  
+  try {
+      const updatedAddress = await AddressModel.findByIdAndUpdate(id, {
+          email,
+          firstName,
+          lastName,
+          street,
+          city,
+          state,
+          pinCode,
+          country,
+          phone,
+      }, { new: true }); 
+      if (!updatedAddress) {
+          return res.status(404).json({ message: "Address not found" });
+      }
+      res.json(updatedAddress);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Error updating address", error: err.message });
+  }
+});
+
+app.delete("/customeraddress/:id", async (req, res) => {
+  const { id } = req.params; 
+  try {
+      const deletedAddress = await AddressModel.findByIdAndDelete(id);
+
+      if (!deletedAddress) {
+          return res.status(404).json({ message: "Address not found" });
+      }
+      res.status(200).json({ message: "Address deleted successfully" });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Error deleting address", error: err.message });
   }
 });
 

@@ -1,11 +1,27 @@
 import React from 'react'
 import './AddressModal.css'
-export const AddressModal = ({isModalOpen, formData, handleChange, handleSubmit, setIsModalOpen, handleOverlayClick}) => {
+export const AddressModal = ({ isModalOpen, addressData, handleChange, handleSubmit, setIsModalOpen, handleOverlayClick, setaddressFormData }) => {
     return (
         <>
             {isModalOpen && (<div className="modal-overlay" onClick={handleOverlayClick}>
                 <div className="modal-content">
-                    <button className="close-button" onClick={() => setIsModalOpen(false)}>
+                    <button
+                        className="close-button"
+                        onClick={() => {
+                            setIsModalOpen(false);
+                            setaddressFormData({
+                                email:'',
+                                firstName: '',
+                                lastName: '',
+                                street: '',
+                                city: '',
+                                state: '',
+                                pinCode: '',
+                                country: '',
+                                phone: '',
+                            });
+                        }}
+                    >
                         &times;
                     </button>
                     <form className="place-order" onSubmit={handleSubmit}>
@@ -18,7 +34,7 @@ export const AddressModal = ({isModalOpen, formData, handleChange, handleSubmit,
                                         type="text"
                                         placeholder="First Name"
                                         name="firstName"
-                                        value={formData.firstName}
+                                        value={addressData.firstName}
                                         onChange={handleChange}
                                         required
                                     />
@@ -29,7 +45,7 @@ export const AddressModal = ({isModalOpen, formData, handleChange, handleSubmit,
                                         type="text"
                                         placeholder="Last Name"
                                         name="lastName"
-                                        value={formData.lastName}
+                                        value={addressData.lastName}
                                         onChange={handleChange}
                                         required
                                     />
@@ -41,7 +57,7 @@ export const AddressModal = ({isModalOpen, formData, handleChange, handleSubmit,
                                     type="text"
                                     placeholder="Street"
                                     name="street"
-                                    value={formData.street}
+                                    value={addressData.street}
                                     onChange={handleChange}
                                     required
                                 />
@@ -53,7 +69,7 @@ export const AddressModal = ({isModalOpen, formData, handleChange, handleSubmit,
                                         type="text"
                                         placeholder="City"
                                         name="city"
-                                        value={formData.city}
+                                        value={addressData.city}
                                         onChange={handleChange}
                                         required
                                     />
@@ -64,7 +80,7 @@ export const AddressModal = ({isModalOpen, formData, handleChange, handleSubmit,
                                         type="text"
                                         placeholder="State"
                                         name="state"
-                                        value={formData.state}
+                                        value={addressData.state}
                                         onChange={handleChange}
                                         required
                                     />
@@ -74,10 +90,10 @@ export const AddressModal = ({isModalOpen, formData, handleChange, handleSubmit,
                             <div className="multi-field">
                                 <div className="input-group">
                                     <input
-                                        type="text"
+                                        type="number"
                                         placeholder="Pin code"
                                         name="pinCode"
-                                        value={formData.pinCode}
+                                        value={addressData.pinCode}
                                         onChange={handleChange}
                                         required
                                     />
@@ -88,7 +104,7 @@ export const AddressModal = ({isModalOpen, formData, handleChange, handleSubmit,
                                         type="text"
                                         placeholder="Country"
                                         name="country"
-                                        value={formData.country}
+                                        value={addressData.country}
                                         onChange={handleChange}
                                         required
                                     />
@@ -100,7 +116,7 @@ export const AddressModal = ({isModalOpen, formData, handleChange, handleSubmit,
                                     type="number"
                                     placeholder="Phone"
                                     name="phone"
-                                    value={formData.phone}
+                                    value={addressData.phone}
                                     onChange={handleChange}
                                     required
                                 />
@@ -112,6 +128,7 @@ export const AddressModal = ({isModalOpen, formData, handleChange, handleSubmit,
                         </div>
                     </form>
                 </div>
-            </div>)}</>
+            </div >)
+            }</>
     )
 }

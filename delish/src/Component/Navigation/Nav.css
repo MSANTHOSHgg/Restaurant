@@ -26,6 +26,10 @@
     cursor: pointer;
 }
 
+.navbar-menu span{
+    margin-top: 5%;
+}
+
 .navbar-menu span:hover {
     color: tomato;
     transform: scale(1.1);

@@ -27,6 +27,7 @@ const App = () => {
   const [existingemail, setexistingemail] = useState("");
   const [customerData, setCustomerData] = useState(null);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+  const [emailid, setEmailId] = useState("");
   const navigate = useNavigate();
 
   const { setCartItem } = useContext(StoreContext);
@@ -42,14 +43,13 @@ const App = () => {
     country: '',
     phone: '',
   });
-
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       setisLogged(true);
       setCustomerData(foundUser);
-
+      setEmailId(foundUser.email);
     }
   }, []);
 
@@ -97,7 +97,7 @@ const App = () => {
           <Route path='/PrivacyPolicy' element={<PrivacyPolicy menu={menu} setmenu={setmenu} />} />
           <Route path='/ContactUs' element={<ContactUs />} />
           <Route path='/ChangePassword' element={<ChangePassword />} />
-          <Route path='/Payment' element={<Payment customerData={customerData} formData={formData} setFormData={setFormData}/>}/>
+          <Route path='/Payment' element={<Payment customerData={customerData}  />}/>
         </Routes>
 
       </div>

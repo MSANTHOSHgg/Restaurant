@@ -113,7 +113,7 @@ const Login = ({ setlogin, setisLogged, setmenu, menu, existingemail, setexistin
                 if (response.data === "Success") {
                     const response1 = await axios.get(`http://localhost:3001/userdetails/${existingemail}`);
                     setCustomerData(response1.data);
-
+                    console.log(response1.data);
                     localStorage.setItem("user", JSON.stringify(response1.data));
                     toast.success("Login Successfully!", {
                         position: "top-right",
