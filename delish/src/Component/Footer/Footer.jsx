@@ -1,16 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { assets } from '../../assets/assets'; 
+import { assets } from '../../assets/assets';
 import './Footer.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 
 export const Footer = ({ menu, setmenu }) => {
+    function copyToClipboard() {
+        const phoneNumber = document.getElementById("phoneNumber").innerText;
+        navigator.clipboard.writeText(phoneNumber)
+    }
     return (
         <div className='footer'>
             <div className='footer-left'>
                 <img className='footer-logo' src={assets.logo} alt='Delish Logo' />
                 <div className='footer-social-icons'>
-                    <img src={assets.facebook_icon} alt='Facebook' />
-                    <img src={assets.twitter_icon} alt='Twitter' />
+                    <span><FontAwesomeIcon icon={faFacebook} /></span>
+                    <span><FontAwesomeIcon icon={faXTwitter} /></span>
                 </div>
             </div>
 
@@ -24,8 +30,8 @@ export const Footer = ({ menu, setmenu }) => {
 
             <div className='footer-content-contact'>
                 <ul>
-                    <li>+91 8778676679</li>
-                    <li>contact@delish.com</li>
+                    <li onClick={() => copyToClipboard() } id='phoneNumber'>+91 8778676679</li>
+                    <li><a href="mailto:contact@gmail.com" id="emailLink">contact@delish.com</a></li>
                 </ul>
             </div>
 

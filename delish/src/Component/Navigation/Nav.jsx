@@ -26,6 +26,9 @@ const Nav = ({ setlogin, isLogged, menu, setmenu, handleLogout,toggleSideNav }) 
             <Link to="/Menu" onClick={() => setmenu("Menu")} className={menu === "Menu" ? "active" : ""}>Menu</Link>
           </span>
           <span>
+            <Link to="/Orders" onClick={() => setmenu("Orders")} className={menu === "Orders" ? "active" : ""}>Orders</Link>
+          </span>
+          <span>
             <Link to="/AboutUs" onClick={() => setmenu("AboutUs")} className={menu === "AboutUs" ? "active" : ""}>About us</Link>
           </span>
         </ul>

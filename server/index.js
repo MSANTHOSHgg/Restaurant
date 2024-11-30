@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const { CustomerModel, ContactModel, AddressModel } = require("./models/Customer");
+const { CustomerModel, ContactModel, AddressModel,OrderModel } = require("./models/Customer");
 
 const app = express();
 app.use(express.json());
@@ -343,6 +343,57 @@ app.delete("/customeraddress/:id", async (req, res) => {
   } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Error deleting address", error: err.message });
+  }
+});
+
+app.post("/order", async (req, res) => {
+  try {
+      const newOrder = await OrderModel.create(req.body);
+      res.status(201).json({
+          order: newOrder,
+      });
+  } catch (err) {
+      console.error("Error:", err);
+      res.status(500).json({
+          message: "Error placing order.",
+          error: err.message,
+      });
+  }
+});
+
+app.get("/order", async (req, res) => {
+  const { email } = req.query;
+  if (!email) {
+    console.log("No email")
+    return res.status(400).json({ message: "Email is required." });
+  }
+  try {
+    const orders = await OrderModel.find({ email });
+    if (!orders) {
+      return res.status(404).json({ message: "Orders not found." });
+    }
+    res.json(orders);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error fetching Orders." });
+  }
+});
+ 
+app.put("/order/:id", async (req, res) => {
+  const { id } = req.params; 
+  try {
+      const updatedOrder = await OrderModel.findByIdAndUpdate(
+          id,
+          { status: "Cancelled" },
+          { new: true }
+      );
+      if (!updatedOrder) {
+          return res.status(404).json({ message: "Order not found" });
+      }
+      res.status(200).json(updatedOrder);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Error updating order", error: err.message });
   }
 });
 

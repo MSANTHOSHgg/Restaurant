@@ -1,7 +1,7 @@
 .payment {
     padding: 20px;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 10px auto;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -58,7 +58,7 @@
     cursor: pointer;
 }
 
-.payment label {
+.paymentLabel {
     flex-grow: 1;
     cursor: pointer;
     font-size: 14px;
@@ -69,7 +69,7 @@
     padding: 10px 20px;
     font-size: 14px;
     color: #fff;
-    background-color: #007bff;
+    background-color: tomato;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -78,7 +78,7 @@
 }
 
 .payment .AddAddressBtn:hover {
-    background-color: #0056b3;
+    background-color: #e84b02;
 }
 
 .payment .AddAddressBtn:disabled {
@@ -86,14 +86,27 @@
     cursor: not-allowed;
 }
 
+.payment-mode{
+   width: 100%;
+}
+
+.paymentmode-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .payment-type {
+    gap: 8px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+}
+
+.payment-type div{
+    display: flex;
 }
 
 .payment-type input[type="radio"] {
-    accent-color: #007bff;
+    accent-color: #ff5900;
     cursor: pointer;
 }
 
@@ -101,4 +114,80 @@
     font-size: 14px;
     color: #333;
     margin-left: 8px;
+}
+
+.processing-modal-overlay ,.UPI-payment-modal-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(245, 215, 206, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    
+}
+
+.processing-modal ,.UPI-modal{
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.processing-message h2,
+.success-message h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.processing-modal-overlay button,.UPI-payment-modal-overlay button {
+    background-color: tomato;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 15px;
+    font-weight: bold;
+}
+
+.processing-modal button:hover, .UPI-modal button:hover {
+    background-color: #e63939;
+}
+
+.blur-background {
+    filter: blur(3px);
+    pointer-events: none;
+}
+
+.UPI-modal{
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    padding: 50px;
+}
+
+.UPI-modal h2{
+    text-align: center;
+}
+
+.UPI-modal label{
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.UPI-modal input{
+    padding: 12px;
+    border: 1px solid #c5c5c5;
+    border-radius: 5px;
+    outline-color: tomato;
+    font-size: 16px;
+    margin-bottom: 15px;
 }

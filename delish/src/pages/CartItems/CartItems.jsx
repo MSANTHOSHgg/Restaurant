@@ -3,6 +3,8 @@ import './CartItems.css';
 import empty from '../../assets/empty1.png';
 import { StoreContext } from '../../Context/StoreContext';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const CartItems = ({isLogged,setlogin}) => {
     const { cartItem, food_list, removetocart, getTotalAmount, addtocart, remove } = useContext(StoreContext);
@@ -46,7 +48,7 @@ const CartItems = ({isLogged,setlogin}) => {
                             return (
                                 <div key={item._id}>
                                     <div className='cart-items-item'>
-                                        <img src={item.image} alt={item.name} />
+                                        <p><img src={item.image} alt={item.name} /></p>
                                         <p>{item.name}</p>
                                         <p>₹{item.price}</p>
                                         <span className='quan'>
@@ -55,7 +57,7 @@ const CartItems = ({isLogged,setlogin}) => {
                                             <button onClick={() => addtocart(item._id)} className='green'>+</button>
                                         </span>
                                         <p>₹{item.price * cartItem[item._id]}</p>
-                                        <p onClick={() => remove(item._id)} className='cross'>x</p>
+                                        <p onClick={() => remove(item._id)} className='cross'><FontAwesomeIcon icon={faTrash} /></p>
                                     </div>
                                     <hr />
                                 </div>
@@ -83,7 +85,10 @@ const CartItems = ({isLogged,setlogin}) => {
                         <p>Total</p>
                         <p className='Final-total'>₹{totalAmount === 0 ? 0 : totalAmount + 25}</p>
                     </div>
-                    <button onClick={() => navigate(`/Payment`)}>PROCEED TO PAYMENT</button>
+                    <button 
+                    // onClick={() => navigate(`/Payment`)}
+                    onClick={() => handlePayment()}
+                    >PROCEED TO PAYMENT</button>
                 </div>
             </div>)}
         </div>

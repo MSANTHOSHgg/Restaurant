@@ -1,8 +1,8 @@
-import React, { useEffect,useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './sidenav.css'
 
-export const SideNav = ({ menu, setmenu ,closeSideNav}) => {
+export const SideNav = ({ menu, setmenu, closeSideNav }) => {
     const sideNavRef = useRef(null);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ export const SideNav = ({ menu, setmenu ,closeSideNav}) => {
         };
     }, [closeSideNav]);
     return (
-        <nav  className='sidenav' ref={sideNavRef}>
+        <nav className='sidenav' ref={sideNavRef}>
             <div className='sidenav-container'>
                 <ul className="sidenavbar-menu">
                     <li>
@@ -39,6 +39,16 @@ export const SideNav = ({ menu, setmenu ,closeSideNav}) => {
                             aria-current={menu === "Menu" ? "page" : undefined}
                         >
                             Menu
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/Orders"
+                            onClick={() => setmenu("Orders")}
+                            className={menu === "Orders" ? "active" : ""}
+                            aria-current={menu === "Orders" ? "page" : undefined}
+                        >
+                           Orders
                         </Link>
                     </li>
                     <li>

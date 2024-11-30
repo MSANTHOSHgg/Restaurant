@@ -4,6 +4,8 @@ import axios from 'axios';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import {assets} from '../../assets/assets'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPhone,faEnvelope, } from '@fortawesome/free-solid-svg-icons';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -116,6 +118,7 @@ const ContactUs = () => {
             placeholder='Enter your name'
             value={formData.name}
             onChange={handleChange}
+            required
           />
           
         </div>
@@ -129,6 +132,7 @@ const ContactUs = () => {
             placeholder='ex: contact@gmail.com'
             value={formData.email}
             onChange={handleChange}
+            required
           />
           
         </div>
@@ -142,6 +146,7 @@ const ContactUs = () => {
             rows="4"
             value={formData.message}
             onChange={handleChange}
+            required
           />
           
         </div>
@@ -152,8 +157,8 @@ const ContactUs = () => {
       <div className="contact-info">
         <h3>Our Contact Information</h3>
         <ul>
-          <li><img src={assets.contactimg} alt="Phone:"/> <span onClick={()=>copyToClipboard()} id='phoneNumber'>+91 8778676679</span></li>
-          <li><img src={assets.emailimg} alt='Email:'/><a href="mailto:contact@gmail.com" id="emailLink">contact@gmail.com</a></li>
+          <li><FontAwesomeIcon icon={faPhone} /> <span onClick={()=>copyToClipboard()} id='phoneNumber'>+91 8778676679</span></li>
+          <li><FontAwesomeIcon icon={faEnvelope} /><a href="mailto:contact@gmail.com" id="emailLink">contact@gmail.com</a></li>
           <li>Address: 123 Gourmet Street, Food City, India</li>
         </ul>
       </div>

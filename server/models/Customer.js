@@ -40,11 +40,41 @@ const UserAddressSchema = new mongoose.Schema({
   phone: { type: String, required: true },
 })
 
-
 const AddressModel = mongoose.model('customeraddress', UserAddressSchema);
+
+const OrderSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+  },
+  cartDetails: {
+    type: Object,
+    required: true,
+  },
+  address: {
+    type: Object,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ['Confirmed','Prepared', 'Delivered', 'Cancelled'],
+    default: 'Confirmed',
+  },
+  payment: {
+    type:String,
+    required:true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const OrderModel = mongoose.model('Order', OrderSchema);
 
 module.exports = {
   CustomerModel,
   ContactModel,
   AddressModel,
+  OrderModel,
 };

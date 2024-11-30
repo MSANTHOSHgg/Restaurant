@@ -26,16 +26,15 @@
   
   .footer-social-icons {
     display: flex;
-    gap: 10px;
-    width: 70px;
-    margin-left: 10px;
+    justify-content: space-evenly;
   }
-  
-  .footer-social-icons img {
-    width: 30px;
-    height: 20px;
-    cursor: pointer;
-    transition: transform 0.3s, filter 0.3s;
+
+  .footer-social-icons span{
+    transition: transform 0.2s ;
+  }
+
+  .footer-social-icons span:hover{
+    transform: scale(1.2);
   }
   
   .footer-social-icons img:hover {
@@ -99,12 +98,8 @@
     }
   
     .footer-social-icons {
-      justify-content: center;
-    }
-  
-    .footer-social-icons img {
-      width: 25px;
-      height: 18px;
+      display: flex;
+      justify-content: space-between;
     }
   
     .footer-content-contact {

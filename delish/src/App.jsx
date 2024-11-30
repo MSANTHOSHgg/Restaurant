@@ -18,6 +18,7 @@ import { StoreContext } from './Context/StoreContext'
 import ChangePassword from './Component/ChangePassword/ChangePassword'
 import { SideNav } from './Component/SideNav/SideNav'
 import { Payment } from './pages/Payment/Payment'
+import { Orders } from './pages/Orders/Orders'
 
 
 const App = () => {
@@ -30,7 +31,16 @@ const App = () => {
   const [emailid, setEmailId] = useState("");
   const navigate = useNavigate();
 
-  const { setCartItem } = useContext(StoreContext);
+  const [emailOfUser, setEmailOfUser] = useState("");
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+            const foundUser = JSON.parse(loggedInUser);
+            setEmailOfUser(foundUser.email);
+        }
+    }, []);
+
+  const { cartItem, setCartItem, food_list } = useContext(StoreContext);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -77,6 +87,25 @@ const App = () => {
       setIsSideNavOpen(true)
   };
 
+  const [cartDetails, setCartDetails] = useState({
+    name: '',
+    price: '',
+    quantity: '',
+  })
+
+  useEffect(() => {
+    const updatedCartDetails = food_list
+      .filter((item) => cartItem[item._id] > 0)
+      .map((item) => ({
+        name: item.name,
+        price: item.price,
+        quantity: cartItem[item._id],
+      }));
+
+    setCartDetails(updatedCartDetails);
+  }, [food_list, cartItem]);
+
+  const [orders, setOrders] = useState([]);
 
   return (
     <>
@@ -89,15 +118,16 @@ const App = () => {
         <ScrollToTop />
         <Routes>
           <Route path='/' element={<Home menu={menu} setmenu={setmenu} />} />
-          <Route path='/Cart' element={<CartItems isLogged={isLogged} setlogin={setlogin}/>} />
+          <Route path='/Cart' element={<CartItems isLogged={isLogged} setlogin={setlogin} />} />
           <Route path='/Menu' element={<ExplorMenu />} />
           <Route path='/AboutUs' element={<AboutUs />} />
-          <Route path='/Profile' element={<CustomerDetails customerData={customerData} existingemail={existingemail} navigate={navigate} formData={formData} setFormData={setFormData}/>} />
+          <Route path='/Profile' element={<CustomerDetails customerData={customerData} existingemail={existingemail} navigate={navigate} formData={formData} setFormData={setFormData} />} />
           <Route path='/TermsAndCondition' element={<Policy menu={menu} setmenu={setmenu} />} />
           <Route path='/PrivacyPolicy' element={<PrivacyPolicy menu={menu} setmenu={setmenu} />} />
           <Route path='/ContactUs' element={<ContactUs />} />
           <Route path='/ChangePassword' element={<ChangePassword />} />
-          <Route path='/Payment' element={<Payment customerData={customerData}  />}/>
+          <Route path='/Payment' element={<Payment emailOfUser={emailOfUser} customerData={customerData} cartDetails={cartDetails} setCartItem={setCartItem} setOrders={setOrders} />} />
+          <Route path='/Orders' element={<Orders emailOfUser={emailOfUser} orders={orders} setOrders={setOrders}/>} />
         </Routes>
 
       </div>

@@ -79,6 +79,7 @@ textarea:focus {
   gap: 10px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .submitbtn:hover {
